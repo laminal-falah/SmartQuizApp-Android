@@ -1,6 +1,7 @@
 package com.kukitriplan.smartquizapp.ui.dashboard.navigation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.adapter.HistoryKuisAdapter;
@@ -23,6 +25,7 @@ import com.kukitriplan.smartquizapp.data.json.HomeJson;
 import com.kukitriplan.smartquizapp.data.model.HistoryKuis;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
@@ -158,6 +161,11 @@ public class ListKuisFragment extends Fragment {
                             rvListKuisHistory.setAdapter(historyKuisAdapter);
                             historyKuisAdapter.notifyDataSetChanged();
                             progressUtils.hide();
+                        } else if (json.getKode().equals("2")) {
+                            prefManager.clearShared();
+                            startActivity(new Intent(view.getContext(), AuthActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             progressUtils.hide();
                             tvError.setVisibility(View.VISIBLE);

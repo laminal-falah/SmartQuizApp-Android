@@ -231,14 +231,26 @@ public class RegisterFragment extends Fragment {
                     }
                 } else if (response.code() == 502) {
                     btnRegister.setEnabled(true);
+                    txtNama.setText(null);
                     txtEmail.setText(null);
                     txtPass.setText(null);
+                    rg_tipe.clearCheck();
                     progressUtils.hide();
                     Toast.makeText(getActivity(), "502 Connection Timed Out", Toast.LENGTH_LONG).show();
                 } else if (response.code() == 404) {
                     btnRegister.setEnabled(true);
+                    txtNama.setText(null);
                     txtEmail.setText(null);
                     txtPass.setText(null);
+                    rg_tipe.clearCheck();
+                    progressUtils.hide();
+                    Toast.makeText(getActivity(), "404 Not Found", Toast.LENGTH_LONG).show();
+                } else if (response.code() == 500) {
+                    btnRegister.setEnabled(true);
+                    txtNama.setText(null);
+                    txtEmail.setText(null);
+                    txtPass.setText(null);
+                    rg_tipe.clearCheck();
                     progressUtils.hide();
                     Toast.makeText(getActivity(), "404 Not Found", Toast.LENGTH_LONG).show();
                 }

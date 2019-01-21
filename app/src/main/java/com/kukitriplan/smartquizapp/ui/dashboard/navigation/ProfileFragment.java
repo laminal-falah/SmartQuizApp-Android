@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.adapter.ProfileAdapter;
@@ -192,6 +193,11 @@ public class ProfileFragment extends Fragment {
                             rvProfile.setAdapter(profileAdapter);
                             profileAdapter.notifyDataSetChanged();
                             progressUtils.hide();
+                        } else if (json.getKode().equals("2")) {
+                            prefManager.clearShared();
+                            startActivity(new Intent(view.getContext(), AuthActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

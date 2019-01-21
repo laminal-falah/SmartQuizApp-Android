@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.rv_kategori) RecyclerView rvKategori;
     @BindView(R.id.rv_kuis) RecyclerView rvKuis;
     @BindView(R.id.rv_list_kuis_kategori) RecyclerView rvListKuis;
+    @BindView(R.id.tvError) TextView tvError;
 
     private SharedLoginManager prefManager;
 
@@ -121,7 +123,7 @@ public class HomeFragment extends Fragment {
         ButterKnife.bind(this, home);
 
         prefManager = new SharedLoginManager(home.getContext());
-
+        tvError.setVisibility(View.INVISIBLE);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 6);
         rvKategori.setLayoutManager(layoutManager);
         rvKategori.setItemAnimator(new DefaultItemAnimator());
@@ -135,7 +137,7 @@ public class HomeFragment extends Fragment {
         rvKuis.setHasFixedSize(true);
 
         rvListKuis.setVisibility(View.INVISIBLE);
-        RecyclerView.LayoutManager lm = new GridLayoutManager(getContext(), 4, RecyclerView.VERTICAL, false);
+        RecyclerView.LayoutManager lm = new GridLayoutManager(getContext(), 3, RecyclerView.VERTICAL, false);
         rvListKuis.setLayoutManager(lm);
         rvListKuis.setItemAnimator(new DefaultItemAnimator());
         rvListKuis.setHasFixedSize(true);
@@ -221,13 +223,20 @@ public class HomeFragment extends Fragment {
                             }
 
                             progressUtils.hide();
+                        } else if (json.getKode().equals("2")) {
+                            prefManager.clearShared();
+                            startActivity(new Intent(home.getContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             progressUtils.hide();
+                            tvError.setVisibility(View.VISIBLE);
+                            tvError.setText(json.getMessage());
                             //SnackBarUtils.SnackBarUtils(home, json.getMessage(), Snackbar.LENGTH_SHORT);
-                            prefManager.clearShared();
-                            startActivity(new Intent(getContext(), AuthActivity.class)
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                            Toast.makeText(getContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                            //prefManager.clearShared();
+                            /*startActivity(new Intent(getContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));*/
+                            //Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

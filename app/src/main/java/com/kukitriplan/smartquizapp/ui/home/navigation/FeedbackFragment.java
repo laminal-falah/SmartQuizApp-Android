@@ -1,6 +1,7 @@
 package com.kukitriplan.smartquizapp.ui.home.navigation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.kukitriplan.smartquizapp.api.RetrofitBuilder;
 import com.kukitriplan.smartquizapp.data.json.HomeJson;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
@@ -188,6 +190,11 @@ public class FeedbackFragment extends Fragment {
                             info.setText(null);
                             rating.setRating(0);
                             PopupUtils.loadError(view.getContext(), json.getTitle(), json.getMessage());
+                        } else if (json.getKode().equals("2")) {
+                            prefManager.clearShared();
+                            startActivity(new Intent(view.getContext(), AuthActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             btnFeedback.setEnabled(true);
                             progressUtils.hide();

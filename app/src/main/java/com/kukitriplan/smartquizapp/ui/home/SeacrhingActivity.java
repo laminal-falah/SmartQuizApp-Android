@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.kukitriplan.smartquizapp.R;
@@ -28,6 +29,7 @@ import com.kukitriplan.smartquizapp.data.json.HomeJson;
 import com.kukitriplan.smartquizapp.data.model.Kuis;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
 import com.kukitriplan.smartquizapp.utils.SetOrientationUtils;
@@ -148,6 +150,11 @@ public class SeacrhingActivity extends AppCompatActivity implements SearchView.O
                         new GravitySnapHelper(Gravity.TOP).attachToRecyclerView(rvListKuis);
                         listKuisCariAdapter.notifyDataSetChanged();
                         progressUtils.hide();
+                    } else if (json.getKode().equals("2")) {
+                        prefManager.clearShared();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         progressUtils.hide();
                         rvListKuis.setVisibility(View.INVISIBLE);

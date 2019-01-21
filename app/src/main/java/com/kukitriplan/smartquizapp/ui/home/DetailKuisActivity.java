@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.api.ApiServices;
@@ -21,6 +22,7 @@ import com.kukitriplan.smartquizapp.api.RetrofitBuilder;
 import com.kukitriplan.smartquizapp.data.json.HomeJson;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
 import com.kukitriplan.smartquizapp.utils.SnackBarUtils;
 import com.squareup.picasso.Picasso;
@@ -67,6 +69,11 @@ public class DetailKuisActivity extends AppCompatActivity {
                         Picasso.with(getApplicationContext()).load(json.getKuis().getCover()).fit().into(ivCover);
                         cvDetailKuis.setVisibility(View.VISIBLE);
                         progressUtils.hide();
+                    } else if (json.getKode().equals("2")) {
+                        prefManager.clearShared();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         cvDetailKuis.setVisibility(View.INVISIBLE);
                         progressUtils.hide();

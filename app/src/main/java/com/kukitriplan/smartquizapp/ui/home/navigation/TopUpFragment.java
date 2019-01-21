@@ -1,6 +1,7 @@
 package com.kukitriplan.smartquizapp.ui.home.navigation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.adapter.HistoryTopUpAdapter;
@@ -29,6 +31,7 @@ import com.kukitriplan.smartquizapp.data.json.HomeJson;
 import com.kukitriplan.smartquizapp.data.model.HistoryTopUp;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
@@ -207,7 +210,12 @@ public class TopUpFragment extends Fragment {
                             prefManager.saveSPString(SharedLoginManager.SP_SALDO, json.getSaldo());
                             PopupUtils.loadError(view.getContext(), json.getTitle(), json.getMessage());
                             txtVoucher.setText(null);
-                            getHistory();
+                            onResume();
+                        } else if (json.getKode().equals("2")) {
+                            prefManager.clearShared();
+                            startActivity(new Intent(view.getContext(), AuthActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             btnVoucher.setEnabled(true);
                             progressUtils.hide();

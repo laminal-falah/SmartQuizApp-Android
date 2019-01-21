@@ -86,5 +86,6 @@
     <string name="title_activity_home">Home</string>
     <string name="title_dashboard">Dashboard %s</string>
     <string name="title_notifications">Notifications</string>
+    <string name="asset_statements" translatable="false">[{ \"include\": \"https://www.kukitriplan.com/.well-known/assetlinks.json\" }]</string>
 
 </resources>

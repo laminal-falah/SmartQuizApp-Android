@@ -58,6 +58,10 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
         keyboardUtils = new KeyboardUtils();
         keyboardUtils.hideSoftKeyboard(this);
         fragmentLogin();
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
     }
 
     @Override
