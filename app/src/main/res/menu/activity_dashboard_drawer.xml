@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_dashboard_white_24dp"
+            android:title="@string/title_activity_dashboard"/>
+        <item
+            android:id="@+id/nav_buat_kuis"
+            android:icon="@drawable/ic_add_white_24dp"
+            android:title="@string/title_buat_kuis" />
+        <item
+            android:id="@+id/nav_list_kuis"
+            android:icon="@drawable/ic_list_white_24dp"
+            android:title="@string/title_list_kuis" />
+        <item
+            android:id="@+id/nav_list_jual"
+            android:icon="@drawable/ic_list_white_24dp"
+            android:title="@string/title_list_sold" />
+        <item
+            android:id="@+id/nav_with_draw"
+            android:icon="@drawable/ic_money_white_24dp"
+            android:title="@string/title_with_draw" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_white_24dp"
+            android:title="@string/title_profile" />
+    </group>
+
+    <item android:title="@string/app_name">
+        <menu>
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feedback_white_24dp"
+                android:title="@string/title_feedback" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_info_black_24dp"
+                android:title="@string/title_about" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_exit_to_app_white_24dp"
+                android:title="@string/title_logout" />
+        </menu>
+    </item>
+
+</menu>

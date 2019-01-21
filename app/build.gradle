@@ -1,0 +1,98 @@
+apply plugin: 'com.android.application'
+
+def versionPropsFile = file('version.properties')
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+    if (versionPropsFile.canRead()) {
+        Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def versionCodeNo = versionProps['VERSION_CODE'].toInteger()
+        versionProps['VERSION_CODE'] = versionCodeNo.toString()
+        def versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+        versionProps['VERSION_MAJOR'] = versionMajor.toString()
+        def versionMinor = versionProps['VERSION_MINOR'].toInteger()
+        versionProps['VERSION_MINOR'] = versionMinor.toString()
+        def versionPatch = versionProps['VERSION_PATCH'].toInteger()
+        versionProps['VERSION_PATCH'] = versionPatch.toString()
+        def versionBuild = versionProps['VERSION_BUILD'].toInteger()
+        versionProps['VERSION_BUILD'] = versionBuild.toString()
+
+        versionProps.store(versionPropsFile.newWriter(), null)
+
+        defaultConfig {
+            applicationId "com.kukitriplan.smartquizapp"
+            minSdkVersion rootProject.minSdkVersion
+            targetSdkVersion rootProject.targetSdkVersion
+            versionCode versionCode
+            versionName "${versionMajor}.${versionMinor}.${versionPatch}.build-${versionBuild}"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            vectorDrawables.useSupportLibrary = true
+        }
+        buildTypes {
+            debug {
+                versionNameSuffix ".debug"
+                resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
+            }
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                resValue "string", "app_version", "${defaultConfig.versionName}"
+                applicationIdSuffix '.skripsi'
+            }
+        }
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'x86', 'x86_64', 'arm64-v8a', 'armeabi-v7a'
+                universalApk false
+            }
+        }
+        dexOptions {}
+
+    } else {
+        throw new FileNotFoundException("Could not read version.properties")
+    }
+
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:exifinterface:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:customtabs:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.facebook.android:facebook-android-sdk:4.33.0'
+    implementation 'com.github.ybq:Android-Spinkit:1.1.0'
+    implementation 'com.squareup.picasso:picasso:2.3.2'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+    implementation 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    implementation 'com.facebook.android:facebook-login:4.36.1'
+    implementation 'com.basgeekball:awesome-validation:2.0'
+    implementation 'com.github.rubensousa:gravitysnaphelper:1.5'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+}

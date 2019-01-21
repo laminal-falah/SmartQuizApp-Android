@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_saldo"
+        android:title="@string/txtSaldo"
+        android:orderInCategory="0"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_scan"
+        android:title=""
+        android:orderInCategory="0"
+        android:icon="@drawable/ic_camera_alt_white_24dp"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_cari"
+        android:title=""
+        android:orderInCategory="0"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_notif"
+        android:title=""
+        android:orderInCategory="0"
+        android:icon="@drawable/ic_notifications_white_24dp"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_info"
+        android:title=""
+        android:orderInCategory="0"
+        android:icon="@drawable/ic_info_black_24dp"
+        app:showAsAction="always" />
+</menu>

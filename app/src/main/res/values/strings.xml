@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">Smart Quiz App</string>
+
+    <string name="facebook_app_id">311596876142252</string>
+    <string name="base_url">192.168.43.190/q_falah/</string>
+
+    <string name="txtNext">NEXT</string>
+    <string name="txtSkip">SKIP</string>
+    <string name="txtGot">GOT IT</string>
+    <string name="txtTitleWelcome1">Prepare Yourself</string>
+    <string name="txtDescWelcome1">Let\'s learn and practice as many questions online as you like in qualitiva.id</string>
+    <string name="txtTitleWelcome2">Various Questions</string>
+    <string name="txtDescWelcome2">SD, SMP, SMA, SMK, UTS, UNBK, USBN, SBMPTN, CPNS, TOEFL, TOIEC, HSK</string>
+    <string name="txtTitleWelcome3">Easy to use</string>
+    <string name="txtDescWelcome3">Free, the score is displayed instantly, complete with a passing grade</string>
+
+    <string name="txtLogin">Login</string>
+    <string name="txtRegister">Register</string>
+    <string name="txtName">Name</string>
+    <string name="txtEmail">Email</string>
+    <string name="txtPass">Password</string>
+    <string name="txtForget">Forget Password</string>
+    <string name="txtErrorTipe">Select Item !</string>
+    <string name="txtErrorName1">Name is not empty !</string>
+    <string name="txtErrorName2">Name min 3 character !</string>
+    <string name="txtErrorEmail1">Email is not valid !</string>
+    <string name="txtErrorEmail2">Email is not empty !</string>
+    <string name="txtErrorPass1">Password min 8 character !</string>
+    <string name="txtErrorPass2">Password is not empty !</string>
+    <string name="txtErrorValid">Error !</string>
+    <string name="txtHaveAcc">Have an account ?</string>
+    <string name="txtNoHaveAcc">Haven\'t an account ?</string>
+    <string name="txtClickHere">Click Here !</string>
+    <string name="txtRbUser">User</string>
+    <string name="txtRbAuthor">Author</string>
+    <string name="txtExitPress">Press back again to exit</string>
+    <string name="txtLoading">Loading&#8230;</string>
+
+    <string name="txtSearch">Search Quiz...</string>
+    <string name="txtTypeSearch">Type Quiz</string>
+    <string name="txtTitleKuis">Title Quis</string>
+    <string name="txtSoalKuis">%s Item</string>
+    <string name="txtDurasiKuis">%s Minute</string>
+
+    <string name="txtTitleKategori">Category : %s</string>
+    <string name="txtJumlahData">Count : %s</string>
+    <string name="txtPlayButton">Play Quiz</string>
+
+    <string name="txtSaldo">Rp. %s</string>
+    <!-- Barcode -->
+    <string name="toggle_flash">Flash</string>
+    <string name="flash_on">Flash [ON]</string>
+    <string name="flash_off">Flash [OFF]</string>
+    <string name="auto_focus_on">Auto Focus [ON]</string>
+    <string name="auto_focus_off">Auto Focus [OFF]</string>
+    <string name="formats">Formats</string>
+    <string name="choose_formats">Choose Formats</string>
+    <string name="select_camera">Select a Camera</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_home">Home</string>
+    <string name="title_top_up">Top Up</string>
+    <string name="title_feedback">Feedback</string>
+    <string name="title_account">Account</string>
+    <string name="title_buat_kuis">Add Quiz</string>
+    <string name="title_list_kuis">List Quiz</string>
+    <string name="title_list_sold">List Sold</string>
+    <string name="title_with_draw">Withdraw</string>
+    <string name="title_profile">My Profile</string>
+    <string name="title_about">About App</string>
+    <string name="title_logout">Logout</string>
+
+    <string name="txtErrorVoucher1">Kode Voucher tidak boleh kosong</string>
+    <string name="txtErrorVoucher2">Kode Vouhcer Harus 16 Angka</string>
+
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_dashboard">Dashboard %s</string>
+    <string name="title_notifications">Notifications</string>
+
+</resources>

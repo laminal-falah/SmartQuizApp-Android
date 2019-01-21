@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="menu_flash" />
+    <item type="id" name="menu_auto_focus" />
+    <item type="id" name="menu_formats" />
+    <item type="id" name="menu_camera_selector" />
+    <item type="id" name="menu_saldo" />
+    <item type="id" name="menu_scan" />
+    <item type="id" name="menu_notif" />
+    <item type="id" name="menu_info" />
+    <item type="id" name="menu_cari" />
+</resources>
