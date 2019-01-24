@@ -21,6 +21,7 @@ import com.kukitriplan.smartquizapp.data.json.AuthJson;
 import com.kukitriplan.smartquizapp.data.response.AuthResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
+import com.kukitriplan.smartquizapp.ui.dashboard.navigation.BuatKuisFragment;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.ListKuisFragment;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.ProfileFragment;
 import com.kukitriplan.smartquizapp.ui.home.navigation.FeedbackFragment;
@@ -34,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FeedbackFragment.OnFragmentInteractionListener,
-        ListKuisFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
+        ListKuisFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, BuatKuisFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ApiServices services;
@@ -123,6 +124,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             loadFragment(new ListKuisFragment());
         } else if (id == R.id.nav_dashboard) {
             onResume();
+        } else if (id == R.id.nav_buat_kuis) {
+            toolbar.setTitle("Create Quiz");
+            loadFragment(new BuatKuisFragment());
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

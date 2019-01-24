@@ -26,19 +26,8 @@
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
-        <activity android:name=".ui.dashboard.PasswordActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="https"
-                    android:host="www.kukitriplan.com"
-                    android:path="/register" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.dashboard.PasswordActivity"/>
 
         <service
             android:name=".services.ServiceApps"
@@ -48,10 +37,9 @@
             android:name=".services.ReceiverBroadcastServices"
             android:enabled="true"
             android:exported="true"
-            android:label="RestartServiceWhenStopped"
-            android:permission="@string/app_name">
+            android:label="RestartServiceWhenStopped">
             <intent-filter>
-                <action android:name="com.kukitriplan.kuisonline.lf.ActivityRecognition.RestartSensor" />
+                <action android:name="com.kukitriplan.smartquizapp.ActivityRecognition.RestartSensor" />
             </intent-filter>
         </receiver>
 

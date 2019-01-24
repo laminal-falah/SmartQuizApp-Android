@@ -112,27 +112,11 @@ public class ListKuisFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getHistoryKuis();
-    }
-
-    private void bottomSheet() {
-        View bottomSheet = view.findViewById(R.id.framelayout_bottom_sheet);
-        final View bottomSheetLayout = getLayoutInflater().inflate(R.layout.bottom_sheet_dialog, null);
-        (bottomSheetLayout.findViewById(R.id.button_close)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        (bottomSheetLayout.findViewById(R.id.button_ok)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        mBottomSheetDialog = new BottomSheetDialog(getContext());
-        mBottomSheetDialog.setContentView(bottomSheetLayout);
-        mBottomSheetDialog.show();
+        if (prefManager.getSpLevel().equals("author")) {
+           getListKuis();
+        } else {
+            getHistoryKuis();
+        }
     }
 
     private void getHistoryKuis() {
@@ -188,6 +172,11 @@ public class ListKuisFragment extends Fragment {
         });
     }
 
+    private void getListKuis() {
+        progressUtils.hide();
+        tvError.setVisibility(View.VISIBLE);
+        tvError.setText("belum ada quiz");
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

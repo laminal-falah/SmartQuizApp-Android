@@ -38,7 +38,7 @@ public class ServiceApps extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestroy: EXIT");
-        sendBroadcast(new Intent("com.kukitriplan.kuisonline.lf.ActivityRecognition.RestartSensor"));
+        sendBroadcast(new Intent("com.kukitriplan.smartquizapp.ActivityRecognition.RestartSensor"));
         stopTimerTask();
     }
 
