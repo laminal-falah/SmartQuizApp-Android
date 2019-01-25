@@ -7,6 +7,7 @@
     tools:context=".ui.dashboard.navigation.BuatKuisFragment">
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -52,70 +53,129 @@
                     android:layout_height="wrap_content"
                     android:hint="Judul Soal"
                     android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/jmlhSoal"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtJmlhSoal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Jumlah Soal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/judulSoal">
+                app:layout_constraintTop_toBottomOf="@+id/judulSoal" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edtJmlhSoal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Jumlah Soal"
-                    android:inputType="numberSigned" />
+            <Button
+                android:id="@+id/btnMinSoal"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/colorAccent"
+                android:drawableStart="@drawable/ic_remove_black_24dp"
+                android:text="@null"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtJmlhSoal" />
 
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/durasiSoal"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvJmlhSoal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="5"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddSoal"
+                app:layout_constraintStart_toEndOf="@+id/btnMinSoal"
+                app:layout_constraintTop_toBottomOf="@+id/txtJmlhSoal" />
+
+            <Button
+                android:id="@+id/btnAddSoal"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/colorAccent"
+                android:drawableStart="@drawable/ic_add_white_24dp"
+                android:text="@null"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtJmlhSoal" />
+
+            <TextView
+                android:id="@+id/txtDurasiSoal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Durasi Soal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/jmlhSoal">
+                app:layout_constraintTop_toBottomOf="@+id/tvJmlhSoal" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edtDurasiSoal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Durasi Soal"
-                    android:inputType="numberSigned" />
+            <Button
+                android:id="@+id/btnMinDurasi"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/colorAccent"
+                android:drawableStart="@drawable/ic_remove_black_24dp"
+                android:text="@null"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDurasiSoal" />
 
-            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/tvDurasiSoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="5"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddSoal"
+                app:layout_constraintStart_toEndOf="@+id/btnMinSoal"
+                app:layout_constraintTop_toBottomOf="@+id/txtDurasiSoal" />
+
+            <Button
+                android:id="@+id/btnAddDurasi"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/colorAccent"
+                android:drawableStart="@drawable/ic_add_white_24dp"
+                android:text="@null"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDurasiSoal" />
 
             <Spinner
                 android:id="@+id/spinnerHrg"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
+                android:layout_marginTop="8dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/durasiSoal" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDurasiSoal" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchAcak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="Acak Soal"
+                android:textOff="No"
+                android:textOn="Yes"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerHrg" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchBahas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="Tampil Pembahasan"
+                android:textOff="No"
+                android:textOn="Yes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerHrg" />
 
@@ -124,8 +184,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top|start"
-                android:hint="Deskripsi Soal"
-                android:inputType="textMultiLine"
+                android:hint="Deskripsi Kuis"
+                android:inputType="textMultiLine|textCapSentences"
                 android:lines="6"
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"

@@ -2,8 +2,11 @@
     <string name="app_name">Smart Quiz App</string>
 
     <string name="facebook_app_id">311596876142252</string>
-    <string name="base_url">192.168.43.190/q_falah/</string>
-
+    <string-array name="base_url">
+        <item>https://www.kukitriplan.com</item>
+        <item>192.168.43.190/SmartQuizApp/</item>
+        <item>172.20.10.2/SmartQuizApp/</item>
+    </string-array>
     <string name="txtNext">NEXT</string>
     <string name="txtSkip">SKIP</string>
     <string name="txtGot">GOT IT</string>
@@ -72,6 +75,8 @@
 
     <string name="txtErrorVoucher1">Kode Voucher tidak boleh kosong</string>
     <string name="txtErrorVoucher2">Kode Vouhcer Harus 16 Angka</string>
+
+    <string name="txtNomorSoal">Soal ke %s</string>
 
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

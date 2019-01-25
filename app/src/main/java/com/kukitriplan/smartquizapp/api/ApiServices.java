@@ -1,6 +1,7 @@
 package com.kukitriplan.smartquizapp.api;
 
 import com.kukitriplan.smartquizapp.data.response.AuthResponse;
+import com.kukitriplan.smartquizapp.data.response.DashboardResponse;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 
 import java.util.Map;
@@ -135,6 +136,33 @@ public interface ApiServices {
             @Query("f") String f,
             @Query("d") String d,
             @Query("email") String email,
+            @FieldMap Map<String, String> params
+    );
+
+    @POST("api/v1/user/dashboard")
+    Call<DashboardResponse> getKonfigKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d
+    );
+
+    @POST("api/v1/user/dashboard")
+    @FormUrlEncoded
+    Call<DashboardResponse> simpanKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @FieldMap Map<String, String> params
+    );
+
+    @POST("api/v1/user/dashboard")
+    @FormUrlEncoded
+    Call<DashboardResponse> simpanSoal(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("slug") String slug,
             @FieldMap Map<String, String> params
     );
 }

@@ -8,26 +8,45 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.kukitriplan.smartquizapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BuatSoalFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link BuatSoalFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class BuatSoalFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View view;
+
+    @BindView(R.id.tvJudulKuis) TextView tvJudulKuis;
+    @BindView(R.id.tvNomor) TextView tvNomor;
+    @BindView(R.id.textAreaSoal) EditText edtAreaSoal;
+    @BindView(R.id.rgPilihan) RadioGroup rgPilihan;
+    @BindView(R.id.rbA) RadioButton radioButtonA;
+    @BindView(R.id.edtPilihanA) EditText edtPilihanA;
+    @BindView(R.id.rbB) RadioButton radioButtonB;
+    @BindView(R.id.edtPilihanB) EditText edtPilihanB;
+    @BindView(R.id.rbC) RadioButton radioButtonC;
+    @BindView(R.id.edtPilihanC) EditText edtPilihanC;
+    @BindView(R.id.rbD) RadioButton radioButtonD;
+    @BindView(R.id.edtPilihanD) EditText edtPilihanD;
+    @BindView(R.id.rbE) RadioButton radioButtonE;
+    @BindView(R.id.edtPilihanE) EditText edtPilihanE;
+    @BindView(R.id.textAreaBahas) EditText edtAreaBahas;
+    @BindView(R.id.btnTmbhSoal) Button btnTmbhSoal;
+
+    private String judulKuis, nomorSoal, areaSoal, areaBahas, pilihanA, pilihanB, pilihanC, pilihanD, pilihanE;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,15 +54,6 @@ public class BuatSoalFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BuatSoalFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static BuatSoalFragment newInstance(String param1, String param2) {
         BuatSoalFragment fragment = new BuatSoalFragment();
         Bundle args = new Bundle();
@@ -63,10 +73,15 @@ public class BuatSoalFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_buat_soal, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(R.layout.fragment_buat_soal, container, false);
+        ButterKnife.bind(this, view);
+        judulKuis = getArguments().getString("judulSoal");
+        nomorSoal = getArguments().getString("nomorSoal");
+        tvJudulKuis.setText(judulKuis);
+        tvNomor.setText(getResources().getString(R.string.txtNomorSoal, nomorSoal));
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

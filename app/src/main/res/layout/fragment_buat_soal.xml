@@ -10,12 +10,197 @@
     <TextView
         android:id="@+id/tvJudulKuis"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="Judul Kuis"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNomor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txtNomorSoal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvJudulKuis" />
+
+    <EditText
+        android:id="@+id/textAreaSoal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|start"
+        android:hint="Soal"
+        android:inputType="textMultiLine|textCapSentences"
+        android:lines="6"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNomor" />
+
+    <RadioGroup
+        android:id="@+id/rgPilihan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAreaSoal">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="A"
+                app:layout_constraintBottom_toBottomOf="@+id/edtPilihanA"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edtPilihanA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="text|textCapSentences"
+                android:maxLines="1"
+                android:text="Pilihan A"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/rbA"
+                app:layout_constraintStart_toEndOf="@+id/rbA"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/rbB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="B"
+                app:layout_constraintBottom_toBottomOf="@+id/edtPilihanB"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rbA" />
+
+            <EditText
+                android:id="@+id/edtPilihanB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="text|textCapSentences"
+                android:maxLines="1"
+                android:text="Pilihan B"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/rbB"
+                app:layout_constraintStart_toEndOf="@+id/rbB"
+                app:layout_constraintTop_toBottomOf="@+id/edtPilihanA" />
+
+            <RadioButton
+                android:id="@+id/rbC"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="C"
+                app:layout_constraintBottom_toBottomOf="@+id/edtPilihanC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rbB" />
+
+            <EditText
+                android:id="@+id/edtPilihanC"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="text|textCapSentences"
+                android:maxLines="1"
+                android:text="Pilihan C"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/rbC"
+                app:layout_constraintStart_toEndOf="@+id/rbC"
+                app:layout_constraintTop_toBottomOf="@+id/edtPilihanB" />
+
+            <RadioButton
+                android:id="@+id/rbD"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="D"
+                app:layout_constraintBottom_toBottomOf="@+id/edtPilihanD"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rbC" />
+
+            <EditText
+                android:id="@+id/edtPilihanD"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="text|textCapSentences"
+                android:maxLines="1"
+                android:text="Pilihan D"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/rbD"
+                app:layout_constraintStart_toEndOf="@+id/rbD"
+                app:layout_constraintTop_toBottomOf="@+id/edtPilihanC" />
+
+            <RadioButton
+                android:id="@+id/rbE"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="E"
+                app:layout_constraintBottom_toBottomOf="@+id/edtPilihanE"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rbD" />
+
+            <EditText
+                android:id="@+id/edtPilihanE"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="text|textCapSentences"
+                android:maxLines="1"
+                android:text="Pilihan E"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/rbE"
+                app:layout_constraintStart_toEndOf="@+id/rbE"
+                app:layout_constraintTop_toBottomOf="@+id/edtPilihanD" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/textAreaBahas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|start"
+        android:hint="Pembahasan"
+        android:inputType="textMultiLine|textCapSentences"
+        android:lines="3"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgPilihan" />
+
+    <Button
+        android:id="@+id/btnTmbhSoal"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAreaBahas" />
 
 </android.support.constraint.ConstraintLayout>

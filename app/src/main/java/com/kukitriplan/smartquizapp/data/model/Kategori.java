@@ -35,4 +35,10 @@ public class Kategori {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
+
 }
