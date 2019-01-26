@@ -1,10 +1,10 @@
 package com.kukitriplan.smartquizapp.ui.dashboard;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -32,9 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BuatSoalActivity extends AppCompatActivity {
-
-    private static final String TAG = BuatSoalActivity.class.getSimpleName();
+public class EditSoalActivity extends AppCompatActivity {
 
     @BindView(R.id.tvJudulKuis) TextView tvJudulKuis;
     @BindView(R.id.tvNomor) TextView tvNomor;
@@ -51,8 +49,9 @@ public class BuatSoalActivity extends AppCompatActivity {
     @BindView(R.id.rbE) RadioButton radioButtonE;
     @BindView(R.id.edtPilihanE) EditText edtPilihanE;
     @BindView(R.id.textAreaBahas) EditText edtAreaBahas;
-    @BindView(R.id.btnTmbhSoal) Button btnTmbhSoal;
+    @BindView(R.id.btnUbahSoal) Button btnUbahSoal;
 
+    private View view;
     private RadioButton radioButton;
     private String judulKuis, areaSoal, slug, areaBahas, pilihanA, pilihanB, pilihanC, pilihanD, pilihanE;
     private int nomorSoal;
@@ -64,21 +63,26 @@ public class BuatSoalActivity extends AppCompatActivity {
     private ApiServices services;
     private Call<DashboardResponse> call;
 
+    private String id;
+    private String judul;
+    private String nomor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buat_soal);
+        setContentView(R.layout.activity_edit_soal);
         ButterKnife.bind(this);
         progressUtils = new ProgressUtils(this);
         keyboardUtils = new KeyboardUtils();
         prefManager = new SharedLoginManager(this);
         services = RetrofitBuilder.createServices(ApiServices.class);
-        slug = getIntent().getStringExtra("slugKuis");
-        judulKuis = getIntent().getStringExtra("judulKuis");
-        nomorSoal = getIntent().getIntExtra("nomorSoal",0);
-        tvJudulKuis.setText(judulKuis);
-        tvNomor.setText(getString(R.string.txtNomorSoal, String.valueOf(nomorSoal)));
-        progressUtils.hide();
+
+        id = getIntent().getStringExtra("ID");
+        judul = getIntent().getStringExtra("JUDUL");
+        nomor = getIntent().getStringExtra("NOMOR SOAL");
+
+        tvJudulKuis.setText(judul);
+        tvNomor.setText(getString(R.string.txtNomorSoal, nomor));
     }
 
     private boolean validate() {
@@ -152,13 +156,68 @@ public class BuatSoalActivity extends AppCompatActivity {
         return valid;
     }
 
-    @OnClick(R.id.btnTmbhSoal) void tambahSoal() {
+    private void getSoalId() {
+        progressUtils.hide();
+        call = services.getItemSoal(prefManager.getSpToken(), "dashboard","editSoal", id);
+        call.enqueue(new Callback<DashboardResponse>() {
+            @Override
+            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+                if (response.isSuccessful()) {
+                    DashboardResponse res = response.body();
+                    DashboardJson json = res.getDashboard();
+                    if (json.getKode().equals("1")) {
+                        progressUtils.hide();
+                        btnUbahSoal.setEnabled(true);
+                        edtAreaSoal.setText(json.getSoal().getJudulSoal());
+                        edtAreaBahas.setText(json.getSoal().getPembahasan());
+                        edtPilihanA.setText(json.getSoal().getA());
+                        edtPilihanB.setText(json.getSoal().getB());
+                        edtPilihanC.setText(json.getSoal().getC());
+                        edtPilihanD.setText(json.getSoal().getD());
+                        edtPilihanE.setText(json.getSoal().getE());
+                        if (json.getSoal().getKunciJawaban().equals("a")) {
+                            radioButtonA.setChecked(true);
+                        } else if (json.getSoal().getKunciJawaban().equals("b")) {
+                            radioButtonB.setChecked(true);
+                        } else if (json.getSoal().getKunciJawaban().equals("c")) {
+                            radioButtonC.setChecked(true);
+                        } else if (json.getSoal().getKunciJawaban().equals("d")) {
+                            radioButtonD.setChecked(true);
+                        } else {
+                            radioButtonE.setChecked(true);
+                        }
+                    } else if (json.getKode().equals("2")) {
+                        progressUtils.hide();
+                        prefManager.clearShared();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        progressUtils.hide();
+                        btnUbahSoal.setEnabled(true);
+                        Toast.makeText(getApplicationContext(),json.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @OnClick(R.id.btnUbahSoal) void ubahSoal() {
         keyboardUtils.hideSoftKeyboard(this);
+        progressUtils.show();
+
         if (!validate()) {
-            btnTmbhSoal.setEnabled(true);
+            btnUbahSoal.setEnabled(true);
+            progressUtils.hide();
             return;
         }
-        btnTmbhSoal.setEnabled(false);
+
+        btnUbahSoal.setEnabled(false);
         progressUtils.show();
 
         int jwb = rgPilihan.getCheckedRadioButtonId();
@@ -180,7 +239,8 @@ public class BuatSoalActivity extends AppCompatActivity {
         params.put("pilihanE", pilihanE);
         params.put("jawaban", jawaban);
         params.put("bahas",areaBahas);
-        call = services.simpanSoal(prefManager.getSpToken(),"dashboard","simpanSoal", slug, params);
+
+        call = services.ubahSoal(prefManager.getSpToken(), "dashboard", "ubahSoal", id, params);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
             public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
@@ -189,18 +249,8 @@ public class BuatSoalActivity extends AppCompatActivity {
                     DashboardJson json = res.getDashboard();
                     if (json.getKode().equals("1")) {
                         progressUtils.hide();
-                        btnTmbhSoal.setEnabled(true);
-                        edtAreaSoal.setText(null);
-                        edtAreaBahas.setText(null);
-                        edtPilihanA.setText(null);
-                        edtPilihanB.setText(null);
-                        edtPilihanC.setText(null);
-                        edtPilihanD.setText(null);
-                        edtPilihanE.setText(null);
-                        rgPilihan.clearCheck();
-                        Toast.makeText(getApplicationContext(),json.getMessage(), Toast.LENGTH_LONG).show();
-                        slug = json.getSlugKuis();
-                        tvNomor.setText(getString(R.string.txtNomorSoal, String.valueOf(json.getNomorSoal())));
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_LONG).show();
+                        onBackPressed();
                     } else if (json.getKode().equals("2")) {
                         progressUtils.hide();
                         prefManager.clearShared();
@@ -209,54 +259,33 @@ public class BuatSoalActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         progressUtils.hide();
-                        btnTmbhSoal.setEnabled(true);
+                        btnUbahSoal.setEnabled(true);
                         Toast.makeText(getApplicationContext(),json.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                } else if (response.code() == 502) {
-                    progressUtils.hide();
-                    btnTmbhSoal.setEnabled(true);
-                    Toast.makeText(getApplicationContext(),"502 Connection Timed Out", Toast.LENGTH_LONG).show();
-                } else if (response.code() == 503) {
-                    progressUtils.hide();
-                    btnTmbhSoal.setEnabled(true);
-                    Toast.makeText(getApplicationContext(),"503", Toast.LENGTH_LONG).show();
-                } else if (response.code() == 404) {
-                    progressUtils.hide();
-                    btnTmbhSoal.setEnabled(true);
-                    Toast.makeText(getApplicationContext(),"404 Not Found", Toast.LENGTH_LONG).show();
-                } else if (response.code() == 403) {
-                    progressUtils.hide();
-                    btnTmbhSoal.setEnabled(true);
-                    Toast.makeText(getApplicationContext(),"403", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DashboardResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //startActivity(new Intent(this, DashboardActivity.class));
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
+        getSoalId();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

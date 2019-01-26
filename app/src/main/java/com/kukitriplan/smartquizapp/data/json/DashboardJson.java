@@ -9,6 +9,7 @@ public class DashboardJson {
     private String kode;
     private String title;
     private String message;
+    private int jumlahSoal;
 
     private String slugKuis;
     private String judulKuis;
@@ -126,5 +127,13 @@ public class DashboardJson {
 
     public void setSetLogin(boolean setLogin) {
         this.setLogin = setLogin;
+    }
+
+    public int getJumlahSoal() {
+        return jumlahSoal;
+    }
+
+    public void setJumlahSoal(int jumlahSoal) {
+        this.jumlahSoal = jumlahSoal;
     }
 }

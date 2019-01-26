@@ -1,6 +1,7 @@
 package com.kukitriplan.smartquizapp.data.model;
 
 public class Soal {
+    private String nomorSoal;
     private String idKuis;
     private String idSoal;
     private String judulSoal;
@@ -23,6 +24,14 @@ public class Soal {
         this.E = e;
         this.kunciJawaban = kunciJawaban;
         this.pembahasan = pembahasan;
+    }
+
+    public String getNomorSoal() {
+        return nomorSoal;
+    }
+
+    public void setNomorSoal(String nomorSoal) {
+        this.nomorSoal = nomorSoal;
     }
 
     public String getIdKuis() {
@@ -103,5 +112,22 @@ public class Soal {
 
     public void setPembahasan(String pembahasan) {
         this.pembahasan = pembahasan;
+    }
+
+    @Override
+    public String toString() {
+        return "Soal{" +
+                "nomorSoal='" + nomorSoal + '\'' +
+                ", idKuis='" + idKuis + '\'' +
+                ", idSoal='" + idSoal + '\'' +
+                ", judulSoal='" + judulSoal + '\'' +
+                ", A='" + A + '\'' +
+                ", B='" + B + '\'' +
+                ", C='" + C + '\'' +
+                ", D='" + D + '\'' +
+                ", E='" + E + '\'' +
+                ", kunciJawaban='" + kunciJawaban + '\'' +
+                ", pembahasan='" + pembahasan + '\'' +
+                '}';
     }
 }

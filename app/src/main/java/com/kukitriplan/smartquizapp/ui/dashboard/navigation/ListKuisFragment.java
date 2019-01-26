@@ -2,6 +2,7 @@ package com.kukitriplan.smartquizapp.ui.dashboard.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +21,22 @@ import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.adapter.HistoryKuisAdapter;
+import com.kukitriplan.smartquizapp.adapter.ListKuisAuthorAdapter;
 import com.kukitriplan.smartquizapp.api.ApiServices;
 import com.kukitriplan.smartquizapp.api.RetrofitBuilder;
+import com.kukitriplan.smartquizapp.data.json.DashboardJson;
 import com.kukitriplan.smartquizapp.data.json.HomeJson;
 import com.kukitriplan.smartquizapp.data.model.HistoryKuis;
+import com.kukitriplan.smartquizapp.data.model.Kuis;
+import com.kukitriplan.smartquizapp.data.response.DashboardResponse;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.utils.SwipeRecyclerView;
+import com.kukitriplan.smartquizapp.utils.SwipeRecyclerViewAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,9 +63,11 @@ public class ListKuisFragment extends Fragment {
     @BindView(R.id.tvError) TextView tvError;
 
     private ArrayList<HistoryKuis> historyKuis;
+    private ArrayList<Kuis> kuis;
 
     private ApiServices services;
     private Call<HomeResponse> call;
+    private Call<DashboardResponse> callDashboard;
 
     private SharedLoginManager prefManager;
 
@@ -65,6 +75,9 @@ public class ListKuisFragment extends Fragment {
     private ProgressUtils progressUtils;
 
     private HistoryKuisAdapter historyKuisAdapter;
+    private ListKuisAuthorAdapter listKuisAuthorAdapter;
+    private SwipeRecyclerView swipeRecyclerView = null;
+    private ItemTouchHelper itemTouchHelper;
 
     private OnFragmentInteractionListener mListener;
 
@@ -100,12 +113,6 @@ public class ListKuisFragment extends Fragment {
         prefManager = new SharedLoginManager(getContext());
         services = RetrofitBuilder.createServices(ApiServices.class);
 
-        DividerItemDecoration decoration = new DividerItemDecoration(rvListKuisHistory.getContext(), RecyclerView.VERTICAL);
-        rvListKuisHistory.addItemDecoration(decoration);
-        rvListKuisHistory.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvListKuisHistory.setItemAnimator(new DefaultItemAnimator());
-        rvListKuisHistory.setHasFixedSize(true);
-
         return view;
     }
 
@@ -115,7 +122,7 @@ public class ListKuisFragment extends Fragment {
         if (prefManager.getSpLevel().equals("author")) {
            getListKuis();
         } else {
-            getHistoryKuis();
+           getHistoryKuis();
         }
     }
 
@@ -173,10 +180,65 @@ public class ListKuisFragment extends Fragment {
     }
 
     private void getListKuis() {
-        progressUtils.hide();
-        tvError.setVisibility(View.VISIBLE);
-        tvError.setText("belum ada quiz");
+        progressUtils.show();
+        callDashboard = services.getListKuisAuthor(prefManager.getSpToken(), "dashboard","listKuis", prefManager.getSpEmail());
+        callDashboard.enqueue(new Callback<DashboardResponse>() {
+            @Override
+            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+                if (response.isSuccessful()) {
+                    DashboardResponse res = response.body();
+                    DashboardJson json = res.getDashboard();
+                    kuis = new ArrayList<>(Arrays.asList(json.getKuisList()));
+                    List<Kuis> kuisList = new ArrayList<>();
+                    for (int i = 0; i < kuis.size(); i++) {
+                        kuisList.add(new Kuis(
+                                kuis.get(i).getJudul(),
+                                kuis.get(i).getSlug(),
+                                kuis.get(i).getSoal(),
+                                kuis.get(i).getDurasi(),
+                                kuis.get(i).getHarga(),
+                                kuis.get(i).getCover(),
+                                kuis.get(i).getAuthor(),
+                                kuis.get(i).getRating()
+                        ));
+                    }
+                    rvListKuisHistory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+                    rvListKuisHistory.setItemAnimator(new DefaultItemAnimator());
+                    listKuisAuthorAdapter = new ListKuisAuthorAdapter(getContext(), kuis);
+                    rvListKuisHistory.setAdapter(listKuisAuthorAdapter);
+                    swipeRecyclerView = new SwipeRecyclerView(new SwipeRecyclerViewAction() {
+                        @Override
+                        public void onLeftClicked(int position) {
+                            Toast.makeText(getContext(), "Edit Kuis", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onRightClicked(int position) {
+                            Toast.makeText(getContext(), "Hapus Kuis", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    itemTouchHelper = new ItemTouchHelper(swipeRecyclerView);
+                    itemTouchHelper.attachToRecyclerView(rvListKuisHistory);
+                    rvListKuisHistory.addItemDecoration(new RecyclerView.ItemDecoration() {
+                        @Override
+                        public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                            swipeRecyclerView.onDraw(c);
+                        }
+                    });
+                    listKuisAuthorAdapter.notifyDataSetChanged();
+                    progressUtils.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+                progressUtils.hide();
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setText(t.getMessage());
+            }
+        });
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

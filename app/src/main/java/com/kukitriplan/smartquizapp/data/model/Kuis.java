@@ -1,6 +1,7 @@
 package com.kukitriplan.smartquizapp.data.model;
 
 public class Kuis {
+    private String nomor;
     private String judul;
     private String slug;
     private String soal;
@@ -10,8 +11,12 @@ public class Kuis {
     private String author;
     private float rating;
     private String deskripsi;
+    private String id_kuis;
     private String id_kategori;
     private String nm_kategori;
+    private String nm_mapel;
+    private String status;
+    private int nomorSoal;
 
     public Kuis(String judul, String slug, String soal, String durasi, String harga, String cover, String author, float rating) {
         this.judul = judul;
@@ -22,6 +27,14 @@ public class Kuis {
         this.cover = cover;
         this.author = author;
         this.rating = rating;
+    }
+
+    public String getNomor() {
+        return nomor;
+    }
+
+    public void setNomor(String nomor) {
+        this.nomor = nomor;
     }
 
     public String getJudul() {
@@ -96,6 +109,14 @@ public class Kuis {
         this.deskripsi = deskripsi;
     }
 
+    public String getId_kuis() {
+        return id_kuis;
+    }
+
+    public void setId_kuis(String id_kuis) {
+        this.id_kuis = id_kuis;
+    }
+
     public String getId_kategori() {
         return id_kategori;
     }
@@ -110,5 +131,29 @@ public class Kuis {
 
     public void setNm_kategori(String nm_kategori) {
         this.nm_kategori = nm_kategori;
+    }
+
+    public int getNomorSoal() {
+        return nomorSoal;
+    }
+
+    public void setNomorSoal(int nomorSoal) {
+        this.nomorSoal = nomorSoal;
+    }
+
+    public String getNm_mapel() {
+        return nm_mapel;
+    }
+
+    public void setNm_mapel(String nm_mapel) {
+        this.nm_mapel = nm_mapel;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

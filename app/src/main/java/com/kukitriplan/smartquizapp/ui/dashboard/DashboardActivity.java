@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.api.ApiServices;
@@ -22,7 +24,7 @@ import com.kukitriplan.smartquizapp.data.response.AuthResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.BuatKuisFragment;
-import com.kukitriplan.smartquizapp.ui.dashboard.navigation.BuatSoalFragment;
+import com.kukitriplan.smartquizapp.ui.dashboard.navigation.DashboardFragment;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.ListKuisFragment;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.ProfileFragment;
 import com.kukitriplan.smartquizapp.ui.home.navigation.FeedbackFragment;
@@ -30,14 +32,14 @@ import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FeedbackFragment.OnFragmentInteractionListener,
-        ListKuisFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, BuatKuisFragment.OnFragmentInteractionListener,
-        BuatSoalFragment.OnFragmentInteractionListener {
+        ListKuisFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, BuatKuisFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ApiServices services;
@@ -46,6 +48,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private SharedLoginManager prefManager;
     private KeyboardUtils keyboardUtils;
     private ProgressUtils progressUtils;
+
+    private TextView tvNamaAuthor,tvEmailAuthor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +73,19 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View viewHeader = navigationView.getHeaderView(0);
+        tvNamaAuthor = viewHeader.findViewById(R.id.tvNamaAuthor);
+        tvEmailAuthor = viewHeader.findViewById(R.id.tvEmailAuthor);
+        tvNamaAuthor.setText(prefManager.getSpName());
+        tvEmailAuthor.setText(prefManager.getSpEmail());
 
+        loadFragment(new DashboardFragment());
         progressUtils.hide();
+
+        if (!prefManager.getSpLogon()) {
+            startActivity(new Intent(this, AuthActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
     }
 
     @Override
@@ -125,7 +140,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             toolbar.setTitle(getResources().getString(R.string.title_list_kuis));
             loadFragment(new ListKuisFragment());
         } else if (id == R.id.nav_dashboard) {
-            onResume();
+            toolbar.setTitle(getResources().getString(R.string.title_dashboard, prefManager.getSpName()));
+            loadFragment(new DashboardFragment());
         } else if (id == R.id.nav_buat_kuis) {
             toolbar.setTitle("Create Quiz");
             loadFragment(new BuatKuisFragment());

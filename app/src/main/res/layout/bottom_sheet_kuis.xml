@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/app_rounded_bottom_sheet"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_title_sheet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txtJudulKuis"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatRatingBar
+        android:id="@+id/ratingBarSheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="1"
+        android:theme="@style/RatingBar"
+        android:isIndicator="true"
+        style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_sheet" />
+
+    <ImageView
+        android:id="@+id/coverKuis"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarSheet"
+        app:srcCompat="@drawable/indicator_corner_bg" />
+
+    <TextView
+        android:id="@+id/tvDeskripsiKuis"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coverKuis" />
+
+    <Button
+        android:id="@+id/btnTmbhSoal"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txtTambahSoal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiKuis" />
+
+    <Button
+        android:id="@+id/btnListSoal"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txtListSoal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiKuis" />
+
+</android.support.constraint.ConstraintLayout>

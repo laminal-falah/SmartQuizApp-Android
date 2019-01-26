@@ -7,10 +7,12 @@ import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface ApiServices {
@@ -157,6 +159,14 @@ public interface ApiServices {
     );
 
     @POST("api/v1/user/dashboard")
+    Call<DashboardResponse> getListKuisAuthor(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email
+    );
+
+    @POST("api/v1/user/dashboard")
     @FormUrlEncoded
     Call<DashboardResponse> simpanSoal(
             @Query("_token") String token,
@@ -164,5 +174,39 @@ public interface ApiServices {
             @Query("d") String d,
             @Query("slug") String slug,
             @FieldMap Map<String, String> params
+    );
+
+    @POST("api/v1/user/dashboard")
+    Call<DashboardResponse> getListSoalAuthor(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("slug") String slug
+    );
+
+    @POST("api/v1/user/dashboard")
+    Call<DashboardResponse> getItemSoal(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("idSoal") String idSoal
+    );
+
+    @POST("api/v1/user/dashboard")
+    @FormUrlEncoded
+    Call<DashboardResponse> ubahSoal(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("idSoal") String idSoal,
+            @FieldMap Map<String, String> params
+    );
+
+    @DELETE("api/v1/user/dashboard")
+    Call<DashboardResponse> deleteSoal(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("idSoal") String id
     );
 }
