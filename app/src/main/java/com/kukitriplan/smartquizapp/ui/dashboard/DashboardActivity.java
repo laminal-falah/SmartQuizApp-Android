@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.api.ApiServices;
@@ -26,7 +27,9 @@ import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.BuatKuisFragment;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.DashboardFragment;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.ListKuisFragment;
+import com.kukitriplan.smartquizapp.ui.dashboard.navigation.PenjualanFragment;
 import com.kukitriplan.smartquizapp.ui.dashboard.navigation.ProfileFragment;
+import com.kukitriplan.smartquizapp.ui.dashboard.navigation.WithDrawFragment;
 import com.kukitriplan.smartquizapp.ui.home.navigation.FeedbackFragment;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
@@ -39,7 +42,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FeedbackFragment.OnFragmentInteractionListener,
-        ListKuisFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, BuatKuisFragment.OnFragmentInteractionListener {
+        ListKuisFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, BuatKuisFragment.OnFragmentInteractionListener,
+        WithDrawFragment.OnFragmentInteractionListener, PenjualanFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ApiServices services;
@@ -50,6 +54,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private ProgressUtils progressUtils;
 
     private TextView tvNamaAuthor,tvEmailAuthor;
+    private NavigationView navigationView;
+
+    private static long back_pressed;
+
+    private int onStack = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View viewHeader = navigationView.getHeaderView(0);
         tvNamaAuthor = viewHeader.findViewById(R.id.tvNamaAuthor);
@@ -79,6 +88,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         tvNamaAuthor.setText(prefManager.getSpName());
         tvEmailAuthor.setText(prefManager.getSpEmail());
 
+        navigationView.getMenu().getItem(0).setChecked(true);
         loadFragment(new DashboardFragment());
         progressUtils.hide();
 
@@ -86,6 +96,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(this, AuthActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
         }
+
     }
 
     @Override
@@ -94,7 +105,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (back_pressed + 3000 > System.currentTimeMillis()) {
+                super.onBackPressed();
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.txtExitPress), Toast.LENGTH_SHORT).show();
+            }
+            back_pressed = System.currentTimeMillis();
         }
     }
 
@@ -145,6 +161,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_buat_kuis) {
             toolbar.setTitle("Create Quiz");
             loadFragment(new BuatKuisFragment());
+        } else if (id == R.id.nav_with_draw) {
+            toolbar.setTitle(getResources().getString(R.string.title_with_draw));
+            loadFragment(new WithDrawFragment());
+        } else if (id == R.id.nav_list_jual) {
+            toolbar.setTitle(getResources().getString(R.string.title_list_sold));
+            loadFragment(new PenjualanFragment());
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -193,6 +215,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_dashboard, fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(null)
                 .commit();
     }
 

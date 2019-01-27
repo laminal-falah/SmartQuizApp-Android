@@ -32,6 +32,7 @@ import com.kukitriplan.smartquizapp.data.response.DashboardResponse;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
+import com.kukitriplan.smartquizapp.ui.dashboard.EditKuisActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
@@ -188,45 +189,65 @@ public class ListKuisFragment extends Fragment {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
-                    kuis = new ArrayList<>(Arrays.asList(json.getKuisList()));
-                    List<Kuis> kuisList = new ArrayList<>();
-                    for (int i = 0; i < kuis.size(); i++) {
-                        kuisList.add(new Kuis(
-                                kuis.get(i).getJudul(),
-                                kuis.get(i).getSlug(),
-                                kuis.get(i).getSoal(),
-                                kuis.get(i).getDurasi(),
-                                kuis.get(i).getHarga(),
-                                kuis.get(i).getCover(),
-                                kuis.get(i).getAuthor(),
-                                kuis.get(i).getRating()
-                        ));
-                    }
-                    rvListKuisHistory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-                    rvListKuisHistory.setItemAnimator(new DefaultItemAnimator());
-                    listKuisAuthorAdapter = new ListKuisAuthorAdapter(getContext(), kuis);
-                    rvListKuisHistory.setAdapter(listKuisAuthorAdapter);
-                    swipeRecyclerView = new SwipeRecyclerView(new SwipeRecyclerViewAction() {
-                        @Override
-                        public void onLeftClicked(int position) {
-                            Toast.makeText(getContext(), "Edit Kuis", Toast.LENGTH_LONG).show();
+                    if (json.getKode().equals("1")) {
+                        kuis = new ArrayList<>(Arrays.asList(json.getKuisList()));
+                        List<Kuis> kuisList = new ArrayList<>();
+                        for (int i = 0; i < kuis.size(); i++) {
+                            kuisList.add(new Kuis(
+                                    kuis.get(i).getId_kuis(),
+                                    kuis.get(i).getJudul(),
+                                    kuis.get(i).getSlug(),
+                                    kuis.get(i).getSoal(),
+                                    kuis.get(i).getDurasi(),
+                                    kuis.get(i).getHarga(),
+                                    kuis.get(i).getCover(),
+                                    kuis.get(i).getAuthor(),
+                                    kuis.get(i).getRating()
+                            ));
                         }
+                        rvListKuisHistory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+                        rvListKuisHistory.setItemAnimator(new DefaultItemAnimator());
+                        listKuisAuthorAdapter = new ListKuisAuthorAdapter(getContext(), kuis);
+                        rvListKuisHistory.setAdapter(listKuisAuthorAdapter);
+                        swipeRecyclerView = new SwipeRecyclerView(new SwipeRecyclerViewAction() {
+                            @Override
+                            public void onLeftClicked(int position) {
+                                listKuisAuthorAdapter.notifyDataSetChanged();
+                                startActivity(new Intent(getContext(), EditKuisActivity.class)
+                                        .putExtra("ID", kuis.get(position).getId_kuis()));
+                            }
 
-                        @Override
-                        public void onRightClicked(int position) {
-                            Toast.makeText(getContext(), "Hapus Kuis", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    itemTouchHelper = new ItemTouchHelper(swipeRecyclerView);
-                    itemTouchHelper.attachToRecyclerView(rvListKuisHistory);
-                    rvListKuisHistory.addItemDecoration(new RecyclerView.ItemDecoration() {
-                        @Override
-                        public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                            swipeRecyclerView.onDraw(c);
-                        }
-                    });
-                    listKuisAuthorAdapter.notifyDataSetChanged();
-                    progressUtils.hide();
+                            @Override
+                            public void onRightClicked(int position) {
+                                hapusKuis(kuis.get(position).getId_kuis());
+                                listKuisAuthorAdapter.kuis.remove(position);
+                                listKuisAuthorAdapter.notifyItemRemoved(position);
+                                listKuisAuthorAdapter.notifyItemRangeRemoved(position, listKuisAuthorAdapter.getItemCount());
+                                onResume();
+                            }
+                        });
+                        itemTouchHelper = new ItemTouchHelper(swipeRecyclerView);
+                        itemTouchHelper.attachToRecyclerView(rvListKuisHistory);
+                        rvListKuisHistory.addItemDecoration(new RecyclerView.ItemDecoration() {
+                            @Override
+                            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                                swipeRecyclerView.onDraw(c);
+                            }
+                        });
+                        listKuisAuthorAdapter.notifyDataSetChanged();
+                        progressUtils.hide();
+                    } else if (json.getKode().equals("2")) {
+                        progressUtils.hide();
+                        prefManager.clearShared();
+                        startActivity(new Intent(getContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        Toast.makeText(getContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        progressUtils.hide();
+                        tvError.setVisibility(View.VISIBLE);
+                        tvError.setText(json.getMessage());
+                        Toast.makeText(getContext(),json.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
@@ -235,6 +256,30 @@ public class ListKuisFragment extends Fragment {
                 progressUtils.hide();
                 tvError.setVisibility(View.VISIBLE);
                 tvError.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void hapusKuis(String id) {
+        callDashboard = services.deleteKuis(prefManager.getSpToken(), "dashboard","hapusKuis", id);
+        callDashboard.enqueue(new Callback<DashboardResponse>() {
+            @Override
+            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+                if (response.isSuccessful()) {
+                    DashboardResponse res = response.body();
+                    DashboardJson json = res.getDashboard();
+                    if (json.getKode().equals("1")) {
+                        Toast.makeText(getContext(), json.getMessage(), Toast.LENGTH_LONG).show();
+                        listKuisAuthorAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

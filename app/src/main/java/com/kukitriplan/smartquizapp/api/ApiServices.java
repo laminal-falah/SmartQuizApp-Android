@@ -85,6 +85,26 @@ public interface ApiServices {
     );
 
     @POST("api/v1/user/home")
+    Call<HomeResponse> mainKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @Query("slug") String slug
+    );
+
+    @POST("api/v1/user/home")
+    @FormUrlEncoded
+    Call<HomeResponse> submitJawaban(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @Query("slug") String slug,
+            @FieldMap Map<String, String> params
+    );
+
+    @POST("api/v1/user/home")
     @FormUrlEncoded
     Call<HomeResponse> isiSaldo(
             @Field("kode") String kode,
@@ -164,6 +184,32 @@ public interface ApiServices {
             @Query("f") String f,
             @Query("d") String d,
             @Query("email") String email
+    );
+
+    @POST("api/v1/user/dashboard")
+    Call<DashboardResponse> getItemKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("idKuis") String idKuis
+    );
+
+    @POST("api/v1/user/dashboard")
+    @FormUrlEncoded
+    Call<DashboardResponse> ubahKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("idKuis") String idKuis,
+            @FieldMap Map<String, String> params
+    );
+
+    @DELETE("api/v1/user/dashboard")
+    Call<DashboardResponse> deleteKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("idKuis") String idKuis
     );
 
     @POST("api/v1/user/dashboard")

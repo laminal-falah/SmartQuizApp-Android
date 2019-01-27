@@ -103,7 +103,7 @@ public class EditProfileActivity extends AppCompatActivity implements UserFragme
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                back();
+                onBackPressed();
             }
         });
         services = RetrofitBuilder.createServices(ApiServices.class);
@@ -379,7 +379,8 @@ public class EditProfileActivity extends AppCompatActivity implements UserFragme
 
     @Override
     public void onBackPressed() {
-        back();
+        //back();
+        super.onBackPressed();
     }
 
     @Override

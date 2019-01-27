@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 public class ListKuisAuthorAdapter extends RecyclerView.Adapter<ListKuisAuthorAdapter.ViewHistory> {
 
     private Context context;
-    private ArrayList<Kuis> kuis;
+    public ArrayList<Kuis> kuis;
     private BottomSheetDialog mBottomSheetDialog;
 
     public ListKuisAuthorAdapter(Context context, ArrayList<Kuis> kuis) {
@@ -81,6 +81,7 @@ public class ListKuisAuthorAdapter extends RecyclerView.Adapter<ListKuisAuthorAd
                 String str = "Jumlah Soal : " + kuis1.getSoal() + " Item \n" +
                              "Durasi Kuis : " + kuis1.getDurasi() + " Menit \n" +
                              "Status Kuis : " + kuis1.getStatus() + "\n" +
+                             "Harga Kuis : " + kuis1.getHarga() + "\n" +
                              "Author : " + kuis1.getAuthor() + "\n" +
                              "Kategori : " + kuis1.getNm_kategori() + "\n" +
                              "Mata Pelajaran : " + kuis1.getNm_mapel() + "\n" +

@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity implements HomeInterface, Ho
     private SharedLoginManager prefManager;
     private String TITLE_NOTIFICATION = "TITLE_NOTIFICATION";
     private String MESSAGE_NOTIFICATION = "MESSAGE_NOTIFICATION";
-    private String saldo = "SALDO";
+    private static String saldo = "SALDO";
     private int counter = 0;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -107,14 +107,14 @@ public class HomeActivity extends AppCompatActivity implements HomeInterface, Ho
         }
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        home();
+        saldo = getResources().getString(R.string.txtSaldo, prefManager.getSpSaldo());
+        //home();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.user, menu);
-        menu.getItem(0).setTitle(getResources().getString(R.string.txtSaldo, prefManager.getSpSaldo()));
+        menu.getItem(0).setTitle(saldo);
         return true;
     }
 
@@ -142,6 +142,12 @@ public class HomeActivity extends AppCompatActivity implements HomeInterface, Ho
     @Override
     protected void onResume() {
         super.onResume();
+        home();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 
     @Override
@@ -218,6 +224,7 @@ public class HomeActivity extends AppCompatActivity implements HomeInterface, Ho
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_user, fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -285,7 +292,7 @@ public class HomeActivity extends AppCompatActivity implements HomeInterface, Ho
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

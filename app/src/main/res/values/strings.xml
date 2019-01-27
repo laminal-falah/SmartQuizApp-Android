@@ -102,4 +102,6 @@
     <string name="txtTambahSoal">Tambah Soal</string>
     <string name="txtListSoal">List Soal</string>
     <string name="txtJudulKuis">Judul Kuis</string>
+    <string name="txtJwbSoal">Submit</string>
+    <string name="txtCountTimer">%s : %s : %s</string>
 </resources>

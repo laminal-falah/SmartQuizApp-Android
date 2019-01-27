@@ -117,6 +117,7 @@ public class KategoriActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        finish();
     }
 
     private void getKuis() {
@@ -137,6 +138,7 @@ public class KategoriActivity extends AppCompatActivity {
                             List<Kuis> kuisList = new ArrayList<>();
                             for (int i = 0; i < kuis.size(); i++) {
                                 kuisList.add(new Kuis(
+                                        kuis.get(i).getId_kuis(),
                                         kuis.get(i).getJudul(),
                                         kuis.get(i).getSlug(),
                                         kuis.get(i).getSoal(),

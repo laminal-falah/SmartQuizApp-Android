@@ -135,6 +135,7 @@ public class SeacrhingActivity extends AppCompatActivity implements SearchView.O
                         List<Kuis> kuisList = new ArrayList<>();
                         for (int i = 0; i < kuis.size(); i++) {
                             kuisList.add(new Kuis(
+                                    kuis.get(i).getId_kuis(),
                                     kuis.get(i).getJudul(),
                                     kuis.get(i).getSlug(),
                                     kuis.get(i).getSoal(),
@@ -186,6 +187,7 @@ public class SeacrhingActivity extends AppCompatActivity implements SearchView.O
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
     }
 

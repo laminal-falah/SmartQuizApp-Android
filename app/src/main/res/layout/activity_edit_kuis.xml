@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.dashboard.navigation.BuatKuisFragment">
+    tools:context=".ui.dashboard.EditKuisActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView2"
@@ -217,11 +217,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/cover" />
 
             <Button
-                android:id="@+id/btnTmbhKuis"
+                android:id="@+id/btnUbahKuis"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tambah Kuis"
+                android:text="Ubah Kuis"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

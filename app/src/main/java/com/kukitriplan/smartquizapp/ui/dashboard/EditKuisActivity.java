@@ -1,19 +1,19 @@
-package com.kukitriplan.smartquizapp.ui.dashboard.navigation;
+package com.kukitriplan.smartquizapp.ui.dashboard;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +36,12 @@ import com.kukitriplan.smartquizapp.data.model.Mapel;
 import com.kukitriplan.smartquizapp.data.response.DashboardResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
-import com.kukitriplan.smartquizapp.ui.dashboard.BuatSoalActivity;
 import com.kukitriplan.smartquizapp.utils.ImageUtils;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,19 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.app.Activity.RESULT_OK;
-
-public class BuatKuisFragment extends Fragment {
-
-    private static final String TAG = BuatKuisFragment.class.getSimpleName();
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    private View view;
+public class EditKuisActivity extends AppCompatActivity {
 
     @BindView(R.id.spinnerKategori) Spinner spKategori;
     @BindView(R.id.spinnerMapel) Spinner spMapel;
@@ -87,12 +74,15 @@ public class BuatKuisFragment extends Fragment {
     @BindView(R.id.textArea_information) EditText edtDeskripsi;
     @BindView(R.id.cover) ImageView coverKuis;
     @BindView(R.id.btnPilihGambar) Button btnPilihGambar;
-    @BindView(R.id.btnTmbhKuis) Button btnTmbhKuis;
+    @BindView(R.id.btnUbahKuis) Button btnUbahKuis;
+    @BindView(R.id.nestedScrollView2) NestedScrollView nestedScrollView;
 
     private TextView tvErrorKategori, tvErrorMapel, tvErrorHarga;
 
     private String idKategori, idMapel, judul, hargaKuis, deskripsi, acakKuis = "0", tmplBahas = "0";
     private int jmlhSoal = 5, durasiSoal = 5;
+
+    private String ID = "0";
 
     private String[] harga = new String[] {
             "Pilih Harga Kuis",
@@ -100,6 +90,9 @@ public class BuatKuisFragment extends Fragment {
     };
 
     private List<String> hargaList = new ArrayList<>(Arrays.asList(harga));
+
+    private List<Kategori> kategoriList;
+    private ArrayAdapter<Kategori> kategoriArrayAdapter;
 
     private ArrayList<Kategori> kategoris;
     private ArrayList<Mapel> mapels;
@@ -115,34 +108,11 @@ public class BuatKuisFragment extends Fragment {
     private KeyboardUtils keyboardUtils;
     private ProgressUtils progressUtils;
 
-    private OnFragmentInteractionListener mListener;
-
-    public BuatKuisFragment() {
-        // Required empty public constructor
-    }
-
-    public static BuatKuisFragment newInstance(String param1, String param2) {
-        BuatKuisFragment fragment = new BuatKuisFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_buat_kuis, container, false);
-        ButterKnife.bind(this,view);
+        setContentView(R.layout.activity_edit_kuis);
+        ButterKnife.bind(this);
         btnPilihGambar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,10 +126,11 @@ public class BuatKuisFragment extends Fragment {
                 return false;
             }
         });
+        ID = getIntent().getStringExtra("ID");
         services = RetrofitBuilder.createServices(ApiServices.class);
-        prefManager = new SharedLoginManager(getContext());
+        prefManager = new SharedLoginManager(this);
         keyboardUtils = new KeyboardUtils();
-        progressUtils = new ProgressUtils(getContext());
+        progressUtils = new ProgressUtils(this);
         progressUtils.hide();
 
         tvJmlhSoal.setText(String.valueOf(jmlhSoal));
@@ -237,28 +208,19 @@ public class BuatKuisFragment extends Fragment {
             }
         });
 
-        return view;
+        getKuis();
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         getKategoriMapel();
         getHarga();
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                coverKuis.setImageURI(filePath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private void tampilGallery() {
@@ -275,7 +237,7 @@ public class BuatKuisFragment extends Fragment {
     // start kategori mapel
     private void getKategoriMapel() {
         progressUtils.show();
-        call = services.getKonfigKuis(prefManager.getSpToken(), "dashboard", "buatKuis");
+        call = services.getItemKuis(prefManager.getSpToken(), "dashboard", "editKuis", ID);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
             public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
@@ -286,7 +248,7 @@ public class BuatKuisFragment extends Fragment {
                     if (json.getKode().equals("1")) {
                         progressUtils.hide();
                         kategoris = new ArrayList<>(Arrays.asList(json.getKategori()));
-                        final List<Kategori> kategoriList = new ArrayList<>();
+                        kategoriList = new ArrayList<>();
                         for (int i = 0; i < kategoris.size(); i++) {
                             kategoriList.add(new Kategori(
                                     kategoris.get(i).getId(),
@@ -294,7 +256,7 @@ public class BuatKuisFragment extends Fragment {
                                     kategoris.get(i).getIcon()
                             ));
                         }
-                        ArrayAdapter<Kategori> kategoriArrayAdapter = new ArrayAdapter<Kategori>(getContext(), R.layout.spinner_item, kategoris) {
+                        kategoriArrayAdapter = new ArrayAdapter<Kategori>(getApplicationContext(), R.layout.spinner_item, kategoris) {
                             @Override
                             public boolean isEnabled(int position) {
                                 if(position == 0) {
@@ -323,6 +285,7 @@ public class BuatKuisFragment extends Fragment {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 if (position > 0) {
+                                    Log.i("TAG", "onItemSelected: Kategori " + kategoriList.get(position).getId());
                                     idKategori = kategoriList.get(position).getId();
                                 }
                             }
@@ -332,6 +295,10 @@ public class BuatKuisFragment extends Fragment {
 
                             }
                         });
+                        for (int i = 0; i < spKategori.getCount(); i++) {
+                            if (json.getKuis().getNm_kategori().equalsIgnoreCase(spKategori.getItemAtPosition(i).toString()))
+                            spKategori.setSelection(i);
+                        }
 
                         mapels = new ArrayList<>(Arrays.asList(json.getMapel()));
                         final List<Mapel> mapelList = new ArrayList<>();
@@ -341,7 +308,7 @@ public class BuatKuisFragment extends Fragment {
                                     mapels.get(i).getMapel()
                             ));
                         }
-                        ArrayAdapter<Mapel> mapelAdapter = new ArrayAdapter<Mapel>(getContext(), R.layout.spinner_item, mapels){
+                        ArrayAdapter<Mapel> mapelAdapter = new ArrayAdapter<Mapel>(getApplicationContext(), R.layout.spinner_item, mapels){
                             @Override
                             public boolean isEnabled(int position){
                                 if(position == 0) {
@@ -369,6 +336,7 @@ public class BuatKuisFragment extends Fragment {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 if (position > 0) {
+                                    Log.i("TAG", "onItemSelected: Mapel " + mapels.get(position).getId());
                                     idMapel = mapels.get(position).getId();
                                 }
                             }
@@ -378,30 +346,34 @@ public class BuatKuisFragment extends Fragment {
 
                             }
                         });
+                        for (int i = 0; i < spMapel.getCount(); i++) {
+                            if (json.getKuis().getNm_mapel().equalsIgnoreCase(spMapel.getItemAtPosition(i).toString()))
+                                spMapel.setSelection(i);
+                        }
                     } else if (json.getKode().equals("2")) {
                         progressUtils.hide();
                         prefManager.clearShared();
-                        startActivity(new Intent(getContext(), AuthActivity.class)
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                        Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else if (response.code() == 502) {
-                    Toast.makeText(getContext(), "502 Connection Timed Out", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "502 Connection Timed Out", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 503) {
-                    Toast.makeText(getContext(), "503", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "503", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 404) {
-                    Toast.makeText(getContext(), "404 Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "404 Not Found", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 403) {
-                    Toast.makeText(getContext(), "403", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "403", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DashboardResponse> call, Throwable t) {
                 t.getMessage();
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -409,7 +381,7 @@ public class BuatKuisFragment extends Fragment {
 
     // start harga
     private void getHarga() {
-        ArrayAdapter<String> hargaAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, hargaList){
+        ArrayAdapter<String> hargaAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, hargaList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0) {
@@ -449,6 +421,103 @@ public class BuatKuisFragment extends Fragment {
         });
     }
     // end harga
+
+    // start getKuis
+    private void getKuis() {
+        progressUtils.show();
+        call = services.getItemKuis(prefManager.getSpToken(), "dashboard","editKuis", ID);
+        call.enqueue(new Callback<DashboardResponse>() {
+            @Override
+            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+                if (response.isSuccessful()) {
+                    DashboardResponse res = response.body();
+                    DashboardJson json = res.getDashboard();
+                    if (json.getKode().equals("1")) {
+                        edtJudulSoal.setText(json.getKuis().getJudul());
+                        edtDeskripsi.setText(json.getKuis().getDeskripsi());
+                        Picasso.with(getApplicationContext()).load(json.getKuis().getCover())
+                                .into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        coverKuis.setImageBitmap(bitmap);
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                    }
+                                });
+                        jmlhSoal = Integer.valueOf(json.getKuis().getSoal());
+                        durasiSoal = Integer.valueOf(json.getKuis().getDurasi());
+
+                        int selectedHarga = 0;
+                        for (int i = 0; i < harga.length; i++) {
+                            if (json.getKuis().getHarga().equalsIgnoreCase(harga[i]))
+                                selectedHarga = i;
+                        }
+                        spHarga.setSelection(selectedHarga);
+                        tvJmlhSoal.setText(json.getKuis().getSoal());
+                        tvDurasiSoal.setText(json.getKuis().getDurasi());
+                        switchAcak.setChecked(true);
+                        if (json.getKuis().getAcak().equals("1")) {
+                            switchAcak.setChecked(true);
+                        } else {
+                            switchAcak.setChecked(false);
+                        }
+                        if (json.getKuis().getBahas().equals("1")) {
+                            switchBahas.setChecked(true);
+                        } else {
+                            switchBahas.setChecked(false);
+                        }
+                    } else if (json.getKode().equals("2")) {
+                        progressUtils.hide();
+                        btnUbahKuis.setEnabled(true);
+                        prefManager.clearShared();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        progressUtils.hide();
+                        nestedScrollView.setVisibility(View.INVISIBLE);
+                        btnUbahKuis.setEnabled(true);
+                        Toast.makeText(getApplicationContext(),json.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                } else if (response.code() == 502) {
+                    progressUtils.hide();
+                    nestedScrollView.setVisibility(View.INVISIBLE);
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"502 Connection Timed Out", Toast.LENGTH_LONG).show();
+                } else if (response.code() == 503) {
+                    progressUtils.hide();
+                    nestedScrollView.setVisibility(View.INVISIBLE);
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"503", Toast.LENGTH_LONG).show();
+                } else if (response.code() == 404) {
+                    progressUtils.hide();
+                    nestedScrollView.setVisibility(View.INVISIBLE);
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"404 Not Found", Toast.LENGTH_LONG).show();
+                } else if (response.code() == 403) {
+                    progressUtils.hide();
+                    nestedScrollView.setVisibility(View.INVISIBLE);
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"403", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+                progressUtils.hide();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    // end getKuis
 
     // start validasi
     private boolean validate() {
@@ -504,15 +573,13 @@ public class BuatKuisFragment extends Fragment {
     }
     // end validasi
 
-    // start click tambah kuis
-    @OnClick(R.id.btnTmbhKuis) void tambahKuis() {
-        keyboardUtils.hideSoftKeyboard(getActivity());
-
+    @OnClick(R.id.btnUbahKuis) void ubahKuis() {
+        keyboardUtils.hideSoftKeyboard(this);
         if (!validate()) {
-            btnTmbhKuis.setEnabled(true);
+            btnUbahKuis.setEnabled(true);
             return;
         }
-        btnTmbhKuis.setEnabled(false);
+        btnUbahKuis.setEnabled(false);
         progressUtils.show();
 
         String encoded = bitmap != null ? ImageUtils.bitmapToBase64String(bitmap, 60) : "default.png";
@@ -532,7 +599,7 @@ public class BuatKuisFragment extends Fragment {
         params.put("acakSoal", acakKuis);
         params.put("tmplBahas", tmplBahas);
 
-        call = services.simpanKuis(prefManager.getSpToken(), "dashboard", "simpanKuis", prefManager.getSpEmail(), params);
+        call = services.ubahKuis(prefManager.getSpToken(), "dashboard", "ubahKuis", ID, params);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
             public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
@@ -541,82 +608,80 @@ public class BuatKuisFragment extends Fragment {
                     DashboardJson json = res.getDashboard();
                     if (json.getKode().equals("1")) {
                         progressUtils.hide();
-                        btnTmbhKuis.setEnabled(true);
-                        kosong();
-                        edtJudulSoal.setText(null);
-                        edtDeskripsi.setText(null);
-                        Toast.makeText(getContext(), json.getMessage(), Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getContext(), BuatSoalActivity.class)
-                                .putExtra("slugKuis", json.getSlugKuis())
-                                .putExtra("judulKuis", json.getJudulKuis())
-                                .putExtra("nomorSoal", json.getNomorSoal()));
+                        btnUbahKuis.setEnabled(true);
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_LONG).show();
+                        onBackPressed();
                     } else if (json.getKode().equals("2")) {
                         progressUtils.hide();
-                        btnTmbhKuis.setEnabled(true);
+                        btnUbahKuis.setEnabled(true);
                         prefManager.clearShared();
-                        startActivity(new Intent(getContext(), AuthActivity.class)
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                        Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         progressUtils.hide();
-                        btnTmbhKuis.setEnabled(true);
-                        Toast.makeText(getContext(),json.getMessage(), Toast.LENGTH_LONG).show();
+                        btnUbahKuis.setEnabled(true);
+                        Toast.makeText(getApplicationContext(),json.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.code() == 502) {
                     progressUtils.hide();
-                    btnTmbhKuis.setEnabled(true);
-                    Toast.makeText(getContext(),"502 Connection Timed Out", Toast.LENGTH_LONG).show();
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"502 Connection Timed Out", Toast.LENGTH_LONG).show();
                 } else if (response.code() == 503) {
                     progressUtils.hide();
-                    btnTmbhKuis.setEnabled(true);
-                    Toast.makeText(getContext(),"503", Toast.LENGTH_LONG).show();
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"503", Toast.LENGTH_LONG).show();
                 } else if (response.code() == 404) {
                     progressUtils.hide();
-                    btnTmbhKuis.setEnabled(true);
-                    Toast.makeText(getContext(),"404 Not Found", Toast.LENGTH_LONG).show();
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"404 Not Found", Toast.LENGTH_LONG).show();
                 } else if (response.code() == 403) {
                     progressUtils.hide();
-                    btnTmbhKuis.setEnabled(true);
-                    Toast.makeText(getContext(),"403", Toast.LENGTH_LONG).show();
+                    btnUbahKuis.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),"403", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DashboardResponse> call, Throwable t) {
                 progressUtils.hide();
-                t.printStackTrace();
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
-    // end click tambah kuis
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        kosong();
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                coverKuis.setImageURI(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

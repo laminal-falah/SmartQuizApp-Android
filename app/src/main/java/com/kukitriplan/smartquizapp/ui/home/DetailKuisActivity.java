@@ -20,14 +20,21 @@ import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.api.ApiServices;
 import com.kukitriplan.smartquizapp.api.RetrofitBuilder;
 import com.kukitriplan.smartquizapp.data.json.HomeJson;
+import com.kukitriplan.smartquizapp.data.model.Soal;
 import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
+import com.kukitriplan.smartquizapp.ui.home.kuis.QuisActivity;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
 import com.kukitriplan.smartquizapp.utils.SnackBarUtils;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,61 +55,11 @@ public class DetailKuisActivity extends AppCompatActivity {
     private Call<HomeResponse> call;
     private String idKategori, nmKategori, title;
 
-    private void getKuis() {
-        call = services.getDetailKuis(prefManager.getSpToken(),"home","detailKuis", getIntent().getStringExtra("slug"));
-        call.enqueue(new Callback<HomeResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
-                if (response.isSuccessful()) {
-                    HomeResponse res = response.body();
-                    HomeJson json = res.getHome();
-                    if (json.getKode().equals("1")) {
-                        title = json.getKuis().getJudul();
-                        tvTitle.setText(json.getKuis().getJudul());
-                        tvHrg.setText(json.getKuis().getHarga());
-                        tvDurasi.setText(getResources().getString(R.string.txtDurasiKuis, json.getKuis().getDurasi()));
-                        tvSoal.setText(getResources().getString(R.string.txtSoalKuis, json.getKuis().getSoal()));
-                        tvAuthor.setText(json.getKuis().getAuthor());
-                        tvDeskripsi.setText(json.getKuis().getDeskripsi());
-                        ratingBar.setEnabled(false);
-                        ratingBar.setRating(json.getKuis().getRating());
-                        Picasso.with(getApplicationContext()).load(json.getKuis().getCover()).fit().into(ivCover);
-                        cvDetailKuis.setVisibility(View.VISIBLE);
-                        progressUtils.hide();
-                    } else if (json.getKode().equals("2")) {
-                        prefManager.clearShared();
-                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        cvDetailKuis.setVisibility(View.INVISIBLE);
-                        progressUtils.hide();
-                        SnackBarUtils.SnackBarUtils(view, json.getMessage(), Snackbar.LENGTH_LONG);
-                    }
-                } else if (response.code() == 502) {
-                    cvDetailKuis.setVisibility(View.INVISIBLE);
-                    progressUtils.hide();
-                    SnackBarUtils.SnackBarUtils(view, "502", Snackbar.LENGTH_LONG);
-                } else if (response.code() == 404) {
-                    cvDetailKuis.setVisibility(View.INVISIBLE);
-                    progressUtils.hide();
-                    SnackBarUtils.SnackBarUtils(view, "404", Snackbar.LENGTH_LONG);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
-                progressUtils.hide();
-                SnackBarUtils.SnackBarUtils(view, t.getMessage(), Snackbar.LENGTH_LONG);
-            }
-        });
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         setContentView(R.layout.activity_detail_kuis);
+        ButterKnife.bind(this);
         view = findViewById(android.R.id.content);
         cvDetailKuis = findViewById(R.id.cv_detail_kuis);
         cvDetailKuis.setVisibility(View.INVISIBLE);
@@ -171,13 +128,89 @@ public class DetailKuisActivity extends AppCompatActivity {
         tvAuthor = findViewById(R.id.tv_author_detail_kuis);
         tvDeskripsi = findViewById(R.id.tv_deskripsi_detail_kuis);
         btnPlay = findViewById(R.id.btnMainKuis);
+    }
 
-        getKuis();
-
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+    private void getKuis() {
+        call = services.getDetailKuis(prefManager.getSpToken(),"home","detailKuis", getIntent().getStringExtra("slug"));
+        call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick: " + getIntent().getStringExtra("slug"));
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
+                if (response.isSuccessful()) {
+                    HomeResponse res = response.body();
+                    HomeJson json = res.getHome();
+                    if (json.getKode().equals("1")) {
+                        title = json.getKuis().getJudul();
+                        tvTitle.setText(json.getKuis().getJudul());
+                        tvHrg.setText(json.getKuis().getHarga());
+                        tvDurasi.setText(getResources().getString(R.string.txtDurasiKuis, json.getKuis().getDurasi()));
+                        tvSoal.setText(getResources().getString(R.string.txtSoalKuis, json.getKuis().getSoal()));
+                        tvAuthor.setText(json.getKuis().getAuthor());
+                        tvDeskripsi.setText(json.getKuis().getDeskripsi());
+                        ratingBar.setEnabled(false);
+                        ratingBar.setRating(json.getKuis().getRating());
+                        Picasso.with(getApplicationContext()).load(json.getKuis().getCover()).fit().into(ivCover);
+                        cvDetailKuis.setVisibility(View.VISIBLE);
+                        progressUtils.hide();
+                    } else if (json.getKode().equals("2")) {
+                        prefManager.clearShared();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        cvDetailKuis.setVisibility(View.INVISIBLE);
+                        progressUtils.hide();
+                        SnackBarUtils.SnackBarUtils(view, json.getMessage(), Snackbar.LENGTH_LONG);
+                    }
+                } else if (response.code() == 502) {
+                    cvDetailKuis.setVisibility(View.INVISIBLE);
+                    progressUtils.hide();
+                    SnackBarUtils.SnackBarUtils(view, "502", Snackbar.LENGTH_LONG);
+                } else if (response.code() == 404) {
+                    cvDetailKuis.setVisibility(View.INVISIBLE);
+                    progressUtils.hide();
+                    SnackBarUtils.SnackBarUtils(view, "404", Snackbar.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
+                progressUtils.hide();
+                SnackBarUtils.SnackBarUtils(view, t.getMessage(), Snackbar.LENGTH_LONG);
+            }
+        });
+    }
+
+    @OnClick(R.id.btnMainKuis) void mainKuis() {
+        progressUtils.show();
+        call = services.mainKuis(prefManager.getSpToken(), "home", "mainKuis", prefManager.getSpEmail(), getIntent().getStringExtra("slug"));
+        call.enqueue(new Callback<HomeResponse>() {
+            @Override
+            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                if (response.isSuccessful()) {
+                    HomeResponse res = response.body();
+                    HomeJson json = res.getHome();
+                    if (json.getKode().equals("1")) {
+                        progressUtils.hide();
+                        startActivity(new Intent(getApplicationContext(), QuisActivity.class)
+                                .putExtra("judul", json.getTitle())
+                                .putExtra("id", json.getKuis().getId_kuis()));
+                        prefManager.saveSPString(SharedLoginManager.SP_SALDO, json.getSaldo());
+                    } else if (json.getKode().equals("2")) {
+                        progressUtils.hide();
+                        prefManager.clearShared();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        progressUtils.hide();
+                        Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -185,6 +218,7 @@ public class DetailKuisActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getKuis();
     }
 
     @Override

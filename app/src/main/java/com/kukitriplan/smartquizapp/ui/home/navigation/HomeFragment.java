@@ -109,12 +109,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        home();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        home();
     }
 
     @Override
@@ -141,8 +141,6 @@ public class HomeFragment extends Fragment {
         rvListKuis.setLayoutManager(lm);
         rvListKuis.setItemAnimator(new DefaultItemAnimator());
         rvListKuis.setHasFixedSize(true);
-
-        home();
 
         return home;
     }
@@ -185,6 +183,7 @@ public class HomeFragment extends Fragment {
                                     List<Kuis> kuisList = new ArrayList<>();
                                     for (int j = 0; j < kuis.size(); j++) {
                                         kuisList.add(new Kuis(
+                                                kuis.get(j).getId_kuis(),
                                                 kuis.get(j).getJudul(),
                                                 kuis.get(j).getSlug(),
                                                 kuis.get(j).getSoal(),
@@ -206,6 +205,7 @@ public class HomeFragment extends Fragment {
                                 List<Kuis> kuisList = new ArrayList<>();
                                 for (int i = 0; i < kuis.size(); i++) {
                                     kuisList.add(new Kuis(
+                                            kuis.get(i).getId_kuis(),
                                             kuis.get(i).getJudul(),
                                             kuis.get(i).getSlug(),
                                             kuis.get(i).getSoal(),

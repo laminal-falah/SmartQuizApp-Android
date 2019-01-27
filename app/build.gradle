@@ -61,7 +61,9 @@ android {
             resValue "string", "app_version", "${defaultConfig.versionName}${versionNameSuffix}"
         }
         release {
+            debuggable false
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "app_version", "${defaultConfig.versionName}"
             applicationIdSuffix '.skripsi'

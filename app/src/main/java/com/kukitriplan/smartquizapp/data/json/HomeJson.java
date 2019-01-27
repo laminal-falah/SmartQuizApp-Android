@@ -33,6 +33,7 @@ public class HomeJson {
     private boolean setLogin;
     private boolean setKuis;
     private boolean setAcak;
+    private int durasi;
 
     public String getKode() {
         return kode;
@@ -184,5 +185,13 @@ public class HomeJson {
 
     public void setSetAcak(boolean setAcak) {
         this.setAcak = setAcak;
+    }
+
+    public int getDurasi() {
+        return durasi;
+    }
+
+    public void setDurasi(int durasi) {
+        this.durasi = durasi;
     }
 }

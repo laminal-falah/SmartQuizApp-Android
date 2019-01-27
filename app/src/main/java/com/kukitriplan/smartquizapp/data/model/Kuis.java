@@ -17,8 +17,11 @@ public class Kuis {
     private String nm_mapel;
     private String status;
     private int nomorSoal;
+    private String acak;
+    private String bahas;
 
-    public Kuis(String judul, String slug, String soal, String durasi, String harga, String cover, String author, float rating) {
+    public Kuis(String id_kuis, String judul, String slug, String soal, String durasi, String harga, String cover, String author, float rating) {
+        this.id_kuis = id_kuis;
         this.judul = judul;
         this.slug = slug;
         this.soal = soal;
@@ -155,5 +158,21 @@ public class Kuis {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAcak() {
+        return acak;
+    }
+
+    public void setAcak(String acak) {
+        this.acak = acak;
+    }
+
+    public String getBahas() {
+        return bahas;
+    }
+
+    public void setBahas(String bahas) {
+        this.bahas = bahas;
     }
 }

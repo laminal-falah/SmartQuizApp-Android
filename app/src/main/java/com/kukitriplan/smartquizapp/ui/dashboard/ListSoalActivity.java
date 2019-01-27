@@ -24,6 +24,7 @@ import com.kukitriplan.smartquizapp.data.json.DashboardJson;
 import com.kukitriplan.smartquizapp.data.model.Soal;
 import com.kukitriplan.smartquizapp.data.response.DashboardResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
 import com.kukitriplan.smartquizapp.utils.SwipeRecyclerView;
@@ -41,7 +42,7 @@ import retrofit2.Response;
 
 public class ListSoalActivity extends AppCompatActivity {
 
-    @BindView(R.id.tvErrorListSoal) TextView tvErrorListSoal;
+    @BindView(R.id.tvErrorListSoal) TextView tvError;
     @BindView(R.id.tvJudulKuis) TextView tvJudulKuis;
     @BindView(R.id.tvJumlahDataSoal) TextView tvJumlahDataSoal;
     @BindView(R.id.rvListSoal) RecyclerView rvListSoal;
@@ -82,12 +83,11 @@ public class ListSoalActivity extends AppCompatActivity {
             @Override
             public void onResponse(final Call<DashboardResponse> call, Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
-                    tvErrorListSoal.setVisibility(View.INVISIBLE);
                     DashboardResponse res = response.body();
                     final DashboardJson json = res.getDashboard();
-                    tvJudulKuis.setText(json.getTitle());
-                    soals = new ArrayList<>(Arrays.asList(json.getSoalList()));
-                    if (soals.size() > 0) {
+                    if (json.getKode().equals("1")) {
+                        tvJudulKuis.setText(json.getTitle());
+                        soals = new ArrayList<>(Arrays.asList(json.getSoalList()));
                         final List<Soal> soalList = new ArrayList<>();
                         for (int i = 0; i < soals.size(); i++) {
                             soalList.add(new Soal(
@@ -130,6 +130,7 @@ public class ListSoalActivity extends AppCompatActivity {
                                 listSoalAdapter.soals.remove(position);
                                 listSoalAdapter.notifyItemRemoved(position);
                                 listSoalAdapter.notifyItemRangeChanged(position, listSoalAdapter.getItemCount());
+                                onResume();
                             }
                         });
                         itemTouchHelper = new ItemTouchHelper(swipeRecyclerView);
@@ -141,19 +142,29 @@ public class ListSoalActivity extends AppCompatActivity {
                             }
                         });
                         listSoalAdapter.notifyDataSetChanged();
-                    } else {
+                    } else if (json.getKode().equals("2")) {
+                        progressUtils.hide();
+                        prefManager.clearShared();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                         Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        tvJudulKuis.setText(json.getTitle());
+                        tvJumlahDataSoal.setText(getString(R.string.txtJmlhSoal, json.getJumlahSoal()));
+                        progressUtils.hide();
+                        tvError.setVisibility(View.VISIBLE);
+                        tvError.setText(json.getMessage());
+                        Toast.makeText(getApplicationContext(),json.getMessage(), Toast.LENGTH_LONG).show();
                     }
-
                     progressUtils.hide();
-
                 }
             }
 
             @Override
             public void onFailure(Call<DashboardResponse> call, Throwable t) {
-                tvErrorListSoal.setVisibility(View.VISIBLE);
-                tvErrorListSoal.setText(t.getMessage());
+                progressUtils.hide();
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setText(t.getMessage());
             }
         });
     }
