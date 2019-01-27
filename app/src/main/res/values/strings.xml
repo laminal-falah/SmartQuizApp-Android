@@ -104,4 +104,7 @@
     <string name="txtJudulKuis">Judul Kuis</string>
     <string name="txtJwbSoal">Submit</string>
     <string name="txtCountTimer">%s : %s : %s</string>
+    <string name="txtJawabSoal">Jawab</string>
+    <string name="txtNilai">0</string>
+    <string name="txtBackHome">Kembali Ke Home</string>
 </resources>

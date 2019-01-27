@@ -1,33 +1,53 @@
 package com.kukitriplan.smartquizapp.ui.home.kuis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
+import com.kukitriplan.smartquizapp.api.ApiServices;
+import com.kukitriplan.smartquizapp.api.RetrofitBuilder;
+import com.kukitriplan.smartquizapp.data.json.HomeJson;
+import com.kukitriplan.smartquizapp.data.response.HomeResponse;
+import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.ui.home.HomeActivity;
+import com.kukitriplan.smartquizapp.utils.ProgressUtils;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ResultFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ResultFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ResultFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View view;
+    private TextView tvNilai;
+    private Button btnBack, btnSubmit;
+    private AppCompatRatingBar rating;
+
+    private SharedLoginManager prefManager;
+
+    private ApiServices services;
+    private Call<HomeResponse> call;
+
+    private ProgressUtils progressUtils;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,15 +55,6 @@ public class ResultFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ResultFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ResultFragment newInstance(String param1, String param2) {
         ResultFragment fragment = new ResultFragment();
         Bundle args = new Bundle();
@@ -63,10 +74,59 @@ public class ResultFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_result, container, false);
+        progressUtils = new ProgressUtils(getContext());
+        progressUtils.hide();
+        services = RetrofitBuilder.createServices(ApiServices.class);
+        prefManager = new SharedLoginManager(getContext());
+        rating = view.findViewById(R.id.ratingBarKuis);
+        rating.setClickable(true);
+        rating.setNumStars(0);
+        rating.setStepSize(1);
+        tvNilai = view.findViewById(R.id.tvNilai);
+        tvNilai.setText(String.valueOf(getArguments().getDouble("NILAI")));
+        btnBack = view.findViewById(R.id.btnBackHome);
+        btnBack.setVisibility(View.INVISIBLE);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, Float> params = new HashMap<>();
+                params.put("rating", rating.getRating());
+                call = services.beriBintang(prefManager.getSpToken(), "home", "beriBintang", prefManager.getSpEmail(), getArguments().getString("IDKUIS"), params);
+                call.enqueue(new Callback<HomeResponse>() {
+                    @Override
+                    public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                        if (response.isSuccessful()) {
+                            HomeResponse res = response.body();
+                            HomeJson json = res.getHome();
+                            if (json.getKode().equals("1")) {
+                                rating.setClickable(false);
+                                Toast.makeText(getContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                            btnBack.setVisibility(View.VISIBLE);
+                            btnSubmit.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<HomeResponse> call, Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), HomeActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

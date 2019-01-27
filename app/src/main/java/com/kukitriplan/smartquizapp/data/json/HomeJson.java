@@ -34,6 +34,7 @@ public class HomeJson {
     private boolean setKuis;
     private boolean setAcak;
     private int durasi;
+    private double nilai;
 
     public String getKode() {
         return kode;
@@ -193,5 +194,13 @@ public class HomeJson {
 
     public void setDurasi(int durasi) {
         this.durasi = durasi;
+    }
+
+    public double getNilai() {
+        return nilai;
+    }
+
+    public void setNilai(double nilai) {
+        this.nilai = nilai;
     }
 }

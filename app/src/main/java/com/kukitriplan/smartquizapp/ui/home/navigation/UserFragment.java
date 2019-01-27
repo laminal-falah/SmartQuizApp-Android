@@ -96,7 +96,7 @@ public class UserFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new ProfileFragment(), "Profile");
-        adapter.addFragment(new ListKuisFragment(), "History Kuis");
+        adapter.addFragment(new ListKuisUserFragment(), "History Kuis");
         viewPager.setAdapter(adapter);
     }
 

@@ -16,6 +16,8 @@ public class SharedLoginManager {
     public static final String SP_TITLE_NOTIF = "SP_TITLE_NOTIFICATION";
     public static final String SP_MSG_NOTIF = "SP_MESSAGE_NOTIFICATION";
     public static final String SP_SALDO = "SP_SALDO";
+    public static final String SP_MENIT = "SP_MENIT";
+    public static final String SP_IDKUIS = "SP_IDKUIS";
 
     private final SharedPreferences sp;
     private final SharedPreferences.Editor editor;
@@ -59,6 +61,14 @@ public class SharedLoginManager {
 
     public String getSpSaldo() {
         return sp.getString(SP_SALDO, "0");
+    }
+
+    public int getSpMenit() {
+        return sp.getInt(SP_MENIT, 0);
+    }
+
+    public String getSpIdkuis() {
+        return sp.getString(SP_IDKUIS, "");
     }
 
     public String getSpTitleNotif() {

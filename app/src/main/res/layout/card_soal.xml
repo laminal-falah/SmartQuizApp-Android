@@ -22,7 +22,7 @@
 
         <RadioGroup
             android:id="@+id/rgPilihan"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,40 +30,51 @@
 
             <RadioButton
                 android:id="@+id/rbPilihanA"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/txtPilihanA" />
 
             <RadioButton
                 android:id="@+id/rbPilihanB"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/txtPilihanB" />
 
             <RadioButton
                 android:id="@+id/rbPilihanC"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/txtPilihanC" />
 
             <RadioButton
                 android:id="@+id/rbPilihanD"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/txtPilihanD" />
 
             <RadioButton
                 android:id="@+id/rbPilihanE"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/txtPilihanE" />
 
         </RadioGroup>
+
+        <Button
+            android:id="@+id/btnJawabSoal"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txtJawabSoal"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rgPilihan" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

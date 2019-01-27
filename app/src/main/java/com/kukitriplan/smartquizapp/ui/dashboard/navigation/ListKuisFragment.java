@@ -59,7 +59,6 @@ public class ListKuisFragment extends Fragment {
     private String mParam2;
 
     private View view;
-    private BottomSheetDialog mBottomSheetDialog;
     @BindView(R.id.rvListKuisHistory) RecyclerView rvListKuisHistory;
     @BindView(R.id.tvError) TextView tvError;
 
@@ -109,9 +108,9 @@ public class ListKuisFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        prefManager = new SharedLoginManager(getContext());
         view = inflater.inflate(R.layout.fragment_list_kuis, container, false);
         ButterKnife.bind(this, view);
-        prefManager = new SharedLoginManager(getContext());
         services = RetrofitBuilder.createServices(ApiServices.class);
 
         return view;
@@ -120,65 +119,9 @@ public class ListKuisFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (prefManager.getSpLevel().equals("author")) {
-           getListKuis();
-        } else {
-           getHistoryKuis();
-        }
+        getListKuis();
     }
 
-    private void getHistoryKuis() {
-        keyboardUtils.hideSoftKeyboard(getActivity());
-        progressUtils.show();
-        call = services.getHistoryKuis(prefManager.getSpToken(), "home", "historyKuis", prefManager.getSpEmail());
-        call.enqueue(new Callback<HomeResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
-                if (response.isSuccessful()) {
-                    HomeResponse res = response.body();
-                    HomeJson json = res.getHome();
-                    try {
-                        if (json.getKode().equals("1")) {
-                            historyKuis = new ArrayList<>(Arrays.asList(json.getHistoryKuis()));
-                            List<HistoryKuis> historyKuisList = new ArrayList<>();
-                            for (int i = 0; i < historyKuis.size(); i++) {
-                                historyKuisList.add(new HistoryKuis(
-                                        historyKuis.get(i).getIdNilai(),
-                                        historyKuis.get(i).getNomor(),
-                                        historyKuis.get(i).getNamaKuis(),
-                                        historyKuis.get(i).getNilai()
-                                ));
-                            }
-                            historyKuisAdapter = new HistoryKuisAdapter(getContext(), historyKuis);
-                            rvListKuisHistory.setAdapter(historyKuisAdapter);
-                            historyKuisAdapter.notifyDataSetChanged();
-                            progressUtils.hide();
-                        } else if (json.getKode().equals("2")) {
-                            prefManager.clearShared();
-                            startActivity(new Intent(view.getContext(), AuthActivity.class)
-                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                            Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            progressUtils.hide();
-                            tvError.setVisibility(View.VISIBLE);
-                            tvError.setText(json.getMessage());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        progressUtils.hide();
-                        PopupUtils.loadError(view.getContext(), "Error", e.getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
-                progressUtils.hide();
-                tvError.setVisibility(View.VISIBLE);
-                tvError.setText(t.getMessage());
-            }
-        });
-    }
 
     private void getListKuis() {
         progressUtils.show();

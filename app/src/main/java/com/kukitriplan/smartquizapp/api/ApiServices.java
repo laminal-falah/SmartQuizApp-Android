@@ -94,14 +94,42 @@ public interface ApiServices {
     );
 
     @POST("api/v1/user/home")
+    Call<HomeResponse> tampilSoal(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @Query("idKuis") String idKuis
+    );
+
+    @POST("api/v1/user/home")
     @FormUrlEncoded
     Call<HomeResponse> submitJawaban(
             @Query("_token") String token,
             @Query("f") String f,
             @Query("d") String d,
             @Query("email") String email,
-            @Query("slug") String slug,
             @FieldMap Map<String, String> params
+    );
+
+    @POST("api/v1/user/home")
+    Call<HomeResponse> selesaiKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @Query("idKuis") String idKuis
+    );
+
+    @POST("api/v1/user/home")
+    @FormUrlEncoded
+    Call<HomeResponse> beriBintang(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @Query("idKuis") String idKuis,
+            @FieldMap Map<String, Float> params
     );
 
     @POST("api/v1/user/home")

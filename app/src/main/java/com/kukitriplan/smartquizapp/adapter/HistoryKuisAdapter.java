@@ -75,8 +75,7 @@ public class HistoryKuisAdapter extends RecyclerView.Adapter<HistoryKuisAdapter.
                                 "Durasi Kuis : " + historyKuis.getDurasi() + "\n" +
                                 "Jawaban Benar : " + historyKuis.getBenar() + "\n" +
                                 "Jawaban Salah : " + historyKuis.getSalah() + "\n" +
-                                "Nilai : " + historyKuis.getNilai() + "\n" +
-                                "Sisa Waktu : " + historyKuis.getWaktu() + " Detik \n";
+                                "Nilai : " + historyKuis.getNilai() + "\n";
                 tvDeskripsi.setText(detail);
                 mBottomSheetDialog = new BottomSheetDialog(context);
                 mBottomSheetDialog.setContentView(bottomSheetLayout);
