@@ -29,6 +29,7 @@ import com.kukitriplan.smartquizapp.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.ui.dashboard.EditProfileActivity;
+import com.kukitriplan.smartquizapp.ui.dashboard.PasswordActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.utils.ProgressUtils;
@@ -163,7 +164,11 @@ public class ProfileFragment extends Fragment {
     @OnClick(R.id.btnEditProfile) void editProfile() {
         startActivity(new Intent(getContext(), EditProfileActivity.class));
     }
-    
+
+    @OnClick(R.id.btnUbahPassword) void ubahPassword() {
+        startActivity(new Intent(getContext(), PasswordActivity.class));
+    }
+
     private void profile() {
         progressUtils.show();
         callProfile = services.getProfile(prefManager.getSpToken(),"home", "profileUser", prefManager.getSpEmail());

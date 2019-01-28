@@ -107,4 +107,7 @@
     <string name="txtJawabSoal">Jawab</string>
     <string name="txtNilai">0</string>
     <string name="txtBackHome">Kembali Ke Home</string>
+    <string name="txtUbahPassword">Ubah Password</string>
+    <string name="txtPassNew">Password Baru</string>
+    <string name="txtPassOld">Password Lama</string>
 </resources>

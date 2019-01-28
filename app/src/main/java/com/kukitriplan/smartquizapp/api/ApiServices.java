@@ -30,7 +30,8 @@ public interface ApiServices {
     @FormUrlEncoded
     Call<AuthResponse> login (
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("firebase_token") String token
     );
 
     @POST("api/v1/forget-password")

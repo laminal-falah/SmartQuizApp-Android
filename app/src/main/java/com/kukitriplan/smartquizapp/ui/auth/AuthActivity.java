@@ -12,8 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.data.shared.SharedPrefFirebase;
 import com.kukitriplan.smartquizapp.ui.dashboard.DashboardActivity;
 import com.kukitriplan.smartquizapp.ui.home.HomeActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
@@ -62,6 +69,20 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
+        //FirebaseApp.initializeApp(this);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        String newToken = task.getResult().getToken();
+                        Log.i(TAG, "onSuccess: " + newToken);
+                        SharedPrefFirebase.getInstance(getApplicationContext()).saveDeviceToken(newToken);
+                    }
+        });
     }
 
     @Override

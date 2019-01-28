@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,12 +19,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.api.ApiServices;
 import com.kukitriplan.smartquizapp.api.RetrofitBuilder;
 import com.kukitriplan.smartquizapp.data.json.AuthJson;
 import com.kukitriplan.smartquizapp.data.response.AuthResponse;
 import com.kukitriplan.smartquizapp.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.data.shared.SharedPrefFirebase;
 import com.kukitriplan.smartquizapp.ui.dashboard.DashboardActivity;
 import com.kukitriplan.smartquizapp.ui.home.HomeActivity;
 import com.kukitriplan.smartquizapp.utils.KeyboardUtils;
@@ -131,6 +137,7 @@ public class LoginFragment extends Fragment {
         }
 
         progressUtils.hide();
+
         return view;
     }
 
@@ -180,7 +187,9 @@ public class LoginFragment extends Fragment {
         email = Objects.requireNonNull(edtEmail.getEditText()).getText().toString();
         password = Objects.requireNonNull(edtPass.getEditText()).getText().toString();
 
-        call = services.login(email, password);
+        String token = SharedPrefFirebase.getInstance(getContext()).getDeviceToken();
+        Log.i(TAG, "login: " + token);
+        call = services.login(email, password, token);
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {

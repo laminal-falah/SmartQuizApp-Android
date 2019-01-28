@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:name=".MyApp"
@@ -23,7 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.dashboard.EditKuisActivity"></activity>
+        <activity android:name=".ui.dashboard.EditKuisActivity"/>
         <activity android:name=".ui.dashboard.EditSoalActivity" />
         <activity android:name=".ui.dashboard.ListSoalActivity" />
         <activity android:name=".ui.dashboard.BuatSoalActivity" />
@@ -31,6 +32,15 @@
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notifications_white_24dp" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ui.dashboard.PasswordActivity" />
 
@@ -38,11 +48,19 @@
             android:name=".services.ServiceApps"
             android:enabled="true" />
 
+        <service
+            android:name=".services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <receiver
             android:name=".services.ReceiverBroadcastServices"
             android:enabled="true"
             android:exported="true"
-            android:label="RestartServiceWhenStopped">
+            android:label="RestartServiceWhenStopped"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="com.kukitriplan.smartquizapp.ActivityRecognition.RestartSensor" />
             </intent-filter>

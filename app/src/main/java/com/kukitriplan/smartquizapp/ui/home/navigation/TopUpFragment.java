@@ -301,12 +301,6 @@ public class TopUpFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.user, menu);
-        menu.getItem(0).setTitle(getResources().getString(R.string.txtSaldo, prefManager.getSpSaldo()));
-    }
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

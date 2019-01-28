@@ -20,7 +20,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.kukitriplan.smartquizapp.R;
+import com.kukitriplan.smartquizapp.services.MyFirebaseInstanceIDService;
+import com.kukitriplan.smartquizapp.services.MyFirebaseMessagingService;
 import com.kukitriplan.smartquizapp.services.ServiceApps;
 import com.kukitriplan.smartquizapp.utils.SetOrientationUtils;
 
