@@ -303,5 +303,11 @@ public interface ApiServices {
             @Query("email") String email
     );
 
-
+    @POST("api/v1/user/dashboard")
+    Call<DashboardResponse> getHistoryIkutKuis(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email
+    );
 }

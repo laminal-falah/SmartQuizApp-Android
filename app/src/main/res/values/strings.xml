@@ -65,9 +65,9 @@
     <string name="title_top_up">Top Up</string>
     <string name="title_feedback">Feedback</string>
     <string name="title_account">Account</string>
-    <string name="title_buat_kuis">Add Quiz</string>
-    <string name="title_list_kuis">List Quiz</string>
-    <string name="title_list_sold">List Sold</string>
+    <string name="title_buat_kuis">Tambah Kuis</string>
+    <string name="title_list_kuis">Daftar Kuis</string>
+    <string name="title_list_sold">List Pemain Kuis</string>
     <string name="title_with_draw">Withdraw</string>
     <string name="title_profile">My Profile</string>
     <string name="title_about">About App</string>
@@ -113,5 +113,5 @@
     <string name="txtTitleWithDraw">Silahkan mengisi jumlah yang akan di tarik</string>
     <string name="txtHistoryWithDraw">History With Draw</string>
     <string name="txtBtnWithDraw">WithDraw</string>
-    <string name="txtJumlahWithDraw">0</string>
+    <string name="txtJumlahWithDraw">Rp. 0</string>
 </resources>
