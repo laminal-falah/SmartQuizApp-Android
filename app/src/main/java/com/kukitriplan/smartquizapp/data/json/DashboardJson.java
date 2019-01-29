@@ -1,5 +1,6 @@
 package com.kukitriplan.smartquizapp.data.json;
 
+import com.kukitriplan.smartquizapp.data.model.HistoryWithDraw;
 import com.kukitriplan.smartquizapp.data.model.Kategori;
 import com.kukitriplan.smartquizapp.data.model.Kuis;
 import com.kukitriplan.smartquizapp.data.model.Mapel;
@@ -22,6 +23,8 @@ public class DashboardJson {
     private Mapel[] mapel;
     private Kuis[] kuisList;
     private Soal[] soalList;
+    private HistoryWithDraw[] historyList;
+    private int saldo;
 
     private boolean setLogin;
 
@@ -135,5 +138,21 @@ public class DashboardJson {
 
     public void setJumlahSoal(int jumlahSoal) {
         this.jumlahSoal = jumlahSoal;
+    }
+
+    public HistoryWithDraw[] getHistoryList() {
+        return historyList;
+    }
+
+    public void setHistoryList(HistoryWithDraw[] historyList) {
+        this.historyList = historyList;
+    }
+
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
     }
 }

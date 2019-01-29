@@ -284,4 +284,24 @@ public interface ApiServices {
             @Query("d") String d,
             @Query("idSoal") String id
     );
+
+    @POST("api/v1/user/dashboard")
+    @FormUrlEncoded
+    Call<DashboardResponse> withDraw(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @Field("jumlah") String jmlh
+    );
+
+    @POST("api/v1/user/dashboard")
+    Call<DashboardResponse> getHistoryWithDraw(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email
+    );
+
+
 }

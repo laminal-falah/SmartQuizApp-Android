@@ -110,4 +110,8 @@
     <string name="txtUbahPassword">Ubah Password</string>
     <string name="txtPassNew">Password Baru</string>
     <string name="txtPassOld">Password Lama</string>
+    <string name="txtTitleWithDraw">Silahkan mengisi jumlah yang akan di tarik</string>
+    <string name="txtHistoryWithDraw">History With Draw</string>
+    <string name="txtBtnWithDraw">WithDraw</string>
+    <string name="txtJumlahWithDraw">0</string>
 </resources>

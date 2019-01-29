@@ -43,7 +43,7 @@ import retrofit2.Response;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FeedbackFragment.OnFragmentInteractionListener,
         ListKuisFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, BuatKuisFragment.OnFragmentInteractionListener,
-        WithDrawFragment.OnFragmentInteractionListener, PenjualanFragment.OnFragmentInteractionListener {
+        PenjualanFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ApiServices services;
