@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWelcome"
-    tools:context=".ui.auth.AuthActivity">
+    tools:context=".skripsi.ui.auth.AuthActivity">
 
 </FrameLayout>

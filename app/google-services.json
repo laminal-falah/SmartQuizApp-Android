@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1011341137477:android:46b0ee38e855422e",
+        "mobilesdk_app_id": "1:1011341137477:android:dbb2b57e599b1b78",
         "android_client_info": {
-          "package_name": "com.kukitriplan.smartquizapp"
+          "package_name": "com.kukitriplan.smartquizapp.skripsi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1011341137477-i7mar4gcasg1uhkvmf0su3qb564q4tjr.apps.googleusercontent.com",
+          "client_id": "1011341137477-755foq2fkcrkduepgc6dio0qs0gpocae.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.kukitriplan.smartquizapp",
+            "package_name": "com.kukitriplan.smartquizapp.skripsi",
             "certificate_hash": "6cb2cb895b340133e52cf49ea413c34b8648cc5b"
           }
         },

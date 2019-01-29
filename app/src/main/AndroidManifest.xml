@@ -13,7 +13,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
-        android:name=".MyApp"
+        android:name=".skripsi.MyApp"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:hardwareAccelerated="false"
@@ -24,10 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.dashboard.EditKuisActivity"/>
-        <activity android:name=".ui.dashboard.EditSoalActivity" />
-        <activity android:name=".ui.dashboard.ListSoalActivity" />
-        <activity android:name=".ui.dashboard.BuatSoalActivity" />
+        <activity android:name=".skripsi.ui.dashboard.EditKuisActivity"/>
+        <activity android:name=".skripsi.ui.dashboard.EditSoalActivity" />
+        <activity android:name=".skripsi.ui.dashboard.ListSoalActivity" />
+        <activity android:name=".skripsi.ui.dashboard.BuatSoalActivity" />
 
         <meta-data
             android:name="asset_statements"
@@ -42,21 +42,21 @@
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ui.dashboard.PasswordActivity" />
+        <activity android:name=".skripsi.ui.dashboard.PasswordActivity" />
 
         <service
-            android:name=".services.ServiceApps"
+            android:name=".skripsi.services.ServiceApps"
             android:enabled="true" />
 
         <service
-            android:name=".services.MyFirebaseMessagingService">
+            android:name=".skripsi.services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <receiver
-            android:name=".services.ReceiverBroadcastServices"
+            android:name=".skripsi.services.ReceiverBroadcastServices"
             android:enabled="true"
             android:exported="true"
             android:label="RestartServiceWhenStopped"
@@ -71,7 +71,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".skripsi.ui.SplashActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
@@ -83,13 +83,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".skripsi.ui.WelcomeActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.auth.AuthActivity"
+            android:name=".skripsi.ui.auth.AuthActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize">
@@ -106,48 +106,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".skripsi.ui.home.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_home"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".ui.barcode.ScanBarcodeActivity"
+            android:name=".skripsi.ui.barcode.ScanBarcodeActivity"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".ui.home.HomeActivity"
+            android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.KategoriActivity"
+            android:name=".skripsi.ui.home.KategoriActivity"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".ui.home.HomeActivity"
+            android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.DetailKuisActivity"
+            android:name=".skripsi.ui.home.DetailKuisActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.NotificationActivity"
+            android:name=".skripsi.ui.home.NotificationActivity"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".ui.home.HomeActivity"
+            android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.SeacrhingActivity"
+            android:name=".skripsi.ui.home.SeacrhingActivity"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".ui.home.HomeActivity"
+            android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.kuis.QuisActivity"
+            android:name=".skripsi.ui.home.kuis.QuisActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.dashboard.DashboardActivity"
+            android:name=".skripsi.ui.dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.dashboard.EditProfileActivity"
+            android:name=".skripsi.ui.dashboard.EditProfileActivity"
             android:theme="@style/AppTheme" />
     </application>
 
