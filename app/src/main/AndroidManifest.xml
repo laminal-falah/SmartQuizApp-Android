@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,25 +25,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".skripsi.ui.dashboard.EditKuisActivity"/>
-        <activity android:name=".skripsi.ui.dashboard.EditSoalActivity" />
-        <activity android:name=".skripsi.ui.dashboard.ListSoalActivity" />
-        <activity android:name=".skripsi.ui.dashboard.BuatSoalActivity" />
 
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_notifications_white_24dp" />
+            android:resource="@mipmap/ic_launcher" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id"/>
+
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".skripsi.ui.dashboard.PasswordActivity" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <service
             android:name=".skripsi.services.ServiceApps"
@@ -66,10 +71,6 @@
             </intent-filter>
         </receiver>
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
         <activity
             android:name=".skripsi.ui.SplashActivity"
             android:configChanges="orientation|screenSize"
@@ -82,12 +83,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".skripsi.ui.WelcomeActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
         <activity
             android:name=".skripsi.ui.auth.AuthActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -105,6 +108,7 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".skripsi.ui.home.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -112,43 +116,94 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
         <activity
             android:name=".skripsi.ui.barcode.ScanBarcodeActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity
             android:name=".skripsi.ui.home.KategoriActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity
             android:name=".skripsi.ui.home.DetailKuisActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity
             android:name=".skripsi.ui.home.NotificationActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
         <activity
             android:name=".skripsi.ui.home.SeacrhingActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".skripsi.ui.home.kuis.QuisActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".skripsi.ui.dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name=".skripsi.ui.dashboard.EditProfileActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity
+            android:name=".skripsi.ui.dashboard.PasswordActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity
+            android:name=".skripsi.ui.dashboard.EditKuisActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity
+            android:name=".skripsi.ui.dashboard.EditSoalActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity
+            android:name=".skripsi.ui.dashboard.ListSoalActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+        <activity
+            android:name=".skripsi.ui.dashboard.BuatSoalActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
     </application>
 
 </manifest>

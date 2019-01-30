@@ -6,29 +6,37 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.kukitriplan.smartquizapp.skripsi.data.db.NotificationsHelper;
+import com.kukitriplan.smartquizapp.skripsi.data.model.Notifications;
 import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedPrefFirebase;
-import com.kukitriplan.smartquizapp.skripsi.ui.home.HomeActivity;
+import com.kukitriplan.smartquizapp.skripsi.ui.home.DetailKuisActivity;
 import com.kukitriplan.smartquizapp.skripsi.utils.NotificationUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
 
+    private Notifications notifications = new Notifications();
+    private NotificationsHelper mHelper;
+
     @Override
     public void onNewToken(String s) {
         Log.d(TAG, "Refreshed token: " + s);
-
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
         storeToken(s);
     }
 
     private void storeToken(String token) {
-        //we will save the token in sharedpreferences later
         SharedPrefFirebase.getInstance(getApplicationContext()).saveDeviceToken(token);
     }
 
@@ -48,40 +56,53 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    //this method will display the notification
-    //We are passing the JSONObject that is received from
-    //firebase cloud messaging
     private void sendPushNotification(@NonNull JSONObject json) {
-        //optionally we can display the json into log
         Log.e(TAG, "Notification JSON " + json.toString());
         try {
-            //getting the json data
+            NotificationUtils mNotificationManager = new NotificationUtils(getApplicationContext());
+            mHelper = new NotificationsHelper(getApplicationContext());
+            mHelper.open();
+
             JSONObject data = json.getJSONObject("data");
 
-            //parsing json data
-            String title = data.getString("title");
-            String message = data.getString("message");
-            //String imageUrl = data.getString("image");
+            String tipeNotif = data.getString("tipe");
+            if (tipeNotif.equals("aktivasiKuisAuthor")) {
 
-            //creating MyNotificationManager object
-            NotificationUtils mNotificationManager = new NotificationUtils(getApplicationContext());
+            } else if (tipeNotif.equals("kuisTerbaru")) {
+                String namaKuis = data.getString("namaKuis");
+                String slug = data.getString("slug");
+                Intent intent = new Intent(getApplicationContext(), DetailKuisActivity.class)
+                        .putExtra("nama", namaKuis)
+                        .putExtra("slug", slug)
+                        .putExtra("tipe", "notif");
+                String title = data.getString("title");
+                String subtitle = data.getString("subtitle");
+                String message = data.getString("message");
+                String url = data.getString("image");
 
-            //creating an intent for the notification
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                notifications.setTitle(title);
+                notifications.setSubtitle(subtitle);
+                notifications.setMessage(message);
+                notifications.setDate(getCurrentDate());
 
-            //if there is no image
-            //if(imageUrl.equals("null")){
-                //displaying small notification
-                mNotificationManager.showSmallNotification(title, message, intent);
-            //}else{
-                //if there is an image
-                //displaying a big notification
-                //mNotificationManager.showBigNotification(title, message, imageUrl, intent);
-            //}
+                mHelper.insert(notifications);
+
+                mNotificationManager.NotificationAktivasiKuis(title,subtitle,message,url,intent);
+
+                mHelper.close();
+            } else if (tipeNotif.equals("lengkapiProfile")) {
+
+            }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
         } catch (Exception e) {
             Log.e(TAG, "Exception: " + e.getMessage());
         }
+    }
+
+    private String getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

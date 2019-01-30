@@ -2,6 +2,7 @@ package com.kukitriplan.smartquizapp.skripsi.ui.dashboard.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,8 @@ import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.skripsi.adapter.ProfileAdapter;
 import com.kukitriplan.smartquizapp.skripsi.api.ApiServices;
 import com.kukitriplan.smartquizapp.skripsi.api.RetrofitBuilder;
+import com.kukitriplan.smartquizapp.skripsi.data.db.DatabaseHelper;
+import com.kukitriplan.smartquizapp.skripsi.data.db.NotificationsHelper;
 import com.kukitriplan.smartquizapp.skripsi.data.json.AuthJson;
 import com.kukitriplan.smartquizapp.skripsi.data.json.HomeJson;
 import com.kukitriplan.smartquizapp.skripsi.data.model.Account;
@@ -34,6 +37,7 @@ import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -43,7 +47,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.kukitriplan.smartquizapp.skripsi.data.db.DatabaseContract.NotificationColumns.TABLE_NOTIFICATION;
+
 public class ProfileFragment extends Fragment {
+    private static String DATABASE_TABLE = TABLE_NOTIFICATION;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -140,6 +148,7 @@ public class ProfileFragment extends Fragment {
                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                         }
                         progressUtils.hide();
+                        NotificationsHelper.drop(getContext());
                     } catch (Exception e) {
                         progressUtils.hide();
                         PopupUtils.loadError(getContext(), "Error", e.getMessage());
@@ -220,8 +229,7 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-    
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -245,16 +253,6 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

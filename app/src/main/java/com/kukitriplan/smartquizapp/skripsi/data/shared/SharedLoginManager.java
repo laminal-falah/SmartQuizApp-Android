@@ -12,12 +12,11 @@ public class SharedLoginManager {
     public static final String SP_LOGON = "SP_LOGON";
     public static final String SP_INTRO = "SP_INTRO";
     public static final String SP_TOKEN = "SP_TOKEN";
-    public static final String SP_NOTIF = "SP_NOTIF";
-    public static final String SP_TITLE_NOTIF = "SP_TITLE_NOTIFICATION";
-    public static final String SP_MSG_NOTIF = "SP_MESSAGE_NOTIFICATION";
     public static final String SP_SALDO = "SP_SALDO";
-    public static final String SP_MENIT = "SP_MENIT";
+    public static final int SP_ID_NOTIF = 0;
+    public static final String SP_NOTIF = "SP_NOTIF";
     public static final String SP_IDKUIS = "SP_IDKUIS";
+    public static final int SP_VERSION_DB = 1;
 
     private final SharedPreferences sp;
     private final SharedPreferences.Editor editor;
@@ -63,28 +62,20 @@ public class SharedLoginManager {
         return sp.getString(SP_SALDO, "0");
     }
 
-    public int getSpMenit() {
-        return sp.getInt(SP_MENIT, 0);
-    }
-
-    public String getSpIdkuis() {
-        return sp.getString(SP_IDKUIS, "");
-    }
-
-    public String getSpTitleNotif() {
-        return sp.getString(SP_TITLE_NOTIF, "");
-    }
-
-    public String getSpMsgNotif() {
-        return sp.getString(SP_MSG_NOTIF, "");
-    }
-
     public Boolean getSpLogon() {
         return sp.getBoolean(SP_LOGON, false);
     }
 
-    public Boolean getSpNotif() {
-        return sp.getBoolean(SP_NOTIF, false);
+    public int getSpIdNotif() {
+        return sp.getInt(SP_NOTIF, 0);
+    }
+
+    public int getSpVersionDb() {
+        return sp.getInt(SP_APP, 1);
+    }
+
+    public String getSpIdkuis() {
+        return sp.getString(SP_IDKUIS, "");
     }
 
     public void setSpIntro(boolean firstTime) {
@@ -101,8 +92,8 @@ public class SharedLoginManager {
         editor.putString(SP_LEVEL, "");
         editor.putString(SP_EMAIL, "");
         editor.putString(SP_NAME, "");
-        editor.putBoolean(SP_NOTIF, false);
         editor.putBoolean(SP_LOGON, false);
+        editor.putInt(SP_NOTIF, 0);
         editor.commit();
     }
 }

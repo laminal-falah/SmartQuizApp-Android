@@ -103,9 +103,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
                     if (json.getKode().equals("1")) {
-                        //prefManager.saveSPInt(SharedLoginManager.SP_MENIT, json.getDurasi());
                         prefManager.saveSPString(SharedLoginManager.SP_IDKUIS, json.getKuis().getId_kuis());
-                        //hour += Long.valueOf(json.getDurasi());
                         mCountDownTimer = new CountDownTimer(json.getDurasi(), 1000) {
                             @Override
                             public void onTick(long millisUntilFinished) {
@@ -217,8 +215,6 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
                                 .beginTransaction()
                                 .replace(R.id.frame_main_kuis, resultFragment)
                                 .commit();
-                        prefManager.saveSPInt(SharedLoginManager.SP_MENIT, 0);
-                        prefManager.saveSPString(SharedLoginManager.SP_IDKUIS, "");
                     } else {
                         Toast.makeText(getApplicationContext(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     }

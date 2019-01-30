@@ -21,9 +21,11 @@ import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.kukitriplan.smartquizapp.R;
+import com.kukitriplan.smartquizapp.skripsi.data.db.NotificationsHelper;
 import com.kukitriplan.smartquizapp.skripsi.services.ServiceApps;
 import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,10 +36,8 @@ import butterknife.ButterKnife;
 
 public class SplashActivity extends AppCompatActivity {
 
-    @BindView(R.id.logo)
-    ImageView imageView;
-    @BindView(R.id.spin_kit)
-    SpinKitView spinKitView;
+    @BindView(R.id.logo) ImageView imageView;
+    @BindView(R.id.spin_kit) SpinKitView spinKitView;
 
     final String[] appPermissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,

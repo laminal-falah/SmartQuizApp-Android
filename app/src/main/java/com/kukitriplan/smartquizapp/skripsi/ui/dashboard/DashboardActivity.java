@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.skripsi.api.ApiServices;
 import com.kukitriplan.smartquizapp.skripsi.api.RetrofitBuilder;
+import com.kukitriplan.smartquizapp.skripsi.data.db.NotificationsHelper;
 import com.kukitriplan.smartquizapp.skripsi.data.json.AuthJson;
 import com.kukitriplan.smartquizapp.skripsi.data.response.AuthResponse;
 import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedLoginManager;
@@ -188,6 +189,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                         }
                         progressUtils.hide();
+                        NotificationsHelper.drop(getApplicationContext());
                     } catch (Exception e) {
                         progressUtils.hide();
                         PopupUtils.loadError(getApplicationContext(), "Error", e.getMessage());

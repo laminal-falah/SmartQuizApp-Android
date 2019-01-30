@@ -3,6 +3,7 @@ package com.kukitriplan.smartquizapp.skripsi.api;
 import com.kukitriplan.smartquizapp.skripsi.data.response.AuthResponse;
 import com.kukitriplan.smartquizapp.skripsi.data.response.DashboardResponse;
 import com.kukitriplan.smartquizapp.skripsi.data.response.HomeResponse;
+import com.kukitriplan.smartquizapp.skripsi.data.response.NotificationResponse;
 
 import java.util.Map;
 
@@ -308,5 +309,23 @@ public interface ApiServices {
             @Query("f") String f,
             @Query("d") String d,
             @Query("email") String email
+    );
+
+    @POST("api/v1/user/notification")
+    Call<NotificationResponse> getNotification(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email
+    );
+
+    @POST("api/v1/user/notification")
+    @FormUrlEncoded
+    Call<NotificationResponse> saveToDbNotification(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @FieldMap Map<String, String> params
     );
 }

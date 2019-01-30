@@ -184,7 +184,6 @@ public class LoginFragment extends Fragment {
         password = Objects.requireNonNull(edtPass.getEditText()).getText().toString();
 
         String token = SharedPrefFirebase.getInstance(getContext()).getDeviceToken();
-        Log.i(TAG, "login: " + token);
         call = services.login(email, password, token);
         call.enqueue(new Callback<AuthResponse>() {
             @Override
@@ -200,11 +199,6 @@ public class LoginFragment extends Fragment {
                             prefManager.saveSPString(SharedLoginManager.SP_TOKEN, json.getUser().getToken());
                             prefManager.saveSPString(SharedLoginManager.SP_SALDO, json.getUser().getSaldo());
                             prefManager.saveSPBoolean(SharedLoginManager.SP_LOGON, true);
-                            if (json.getNotif().isSet()) {
-                                prefManager.saveSPBoolean(SharedLoginManager.SP_NOTIF, json.getNotif().isSet());
-                                prefManager.saveSPString(SharedLoginManager.SP_TITLE_NOTIF, json.getNotif().getTitle());
-                                prefManager.saveSPString(SharedLoginManager.SP_MSG_NOTIF, json.getNotif().getMessage());
-                            }
                             switch (json.getUser().getLevel()) {
                                 case "author":
                                     progressUtils.hide();
@@ -257,6 +251,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
+                t.printStackTrace();
                 btnLogin.setEnabled(true);
                 progressUtils.hide();
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();

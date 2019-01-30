@@ -99,13 +99,7 @@ public class HomeActivity extends AppCompatActivity implements HomeInterface, Ho
         toolbar = findViewById(R.id.toolbar_user);
         toolbar.setTitle(R.string.title_home);
         setSupportActionBar(toolbar);
-        if (prefManager.getSpNotif()) {
-            TITLE_NOTIFICATION = prefManager.getSpTitleNotif();
-            MESSAGE_NOTIFICATION = prefManager.getSpMsgNotif();
-            AsyncTaskHome asyncTaskHome = new AsyncTaskHome();
-            asyncTaskHome.execute();
-            counter++;
-        }
+
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         saldo = getResources().getString(R.string.txtSaldo, prefManager.getSpSaldo());
@@ -232,72 +226,5 @@ public class HomeActivity extends AppCompatActivity implements HomeInterface, Ho
     @Override
     public void onFragmentInteraction(Uri uri) {
         Log.i(TAG, "onFragmentInteraction: " + uri);
-    }
-
-    private void showNotif(@NonNull Context context, String title, String message, int notifId) {
-        String CHANNEL_ID = "Channel_100";
-        String CHANNEL_NAME = "Navigation channel";
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(title)
-                .setSmallIcon(R.drawable.ic_notifications_white_24dp)
-                .setContentText(message)
-                .setColor(ContextCompat.getColor(context, android.R.color.transparent))
-                //.setVibrate(new long[]{0, 100, 0, 100})
-                .setSound(alarmSound);
-        //notificationManager.notify(notifId, builder.build());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-
-            /* Create or update. */
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_HIGH);
-
-            //channel.enableVibration(true);
-            //channel.setVibrationPattern(new long[]{0, 100, 0, 100, 0});
-
-            builder.setChannelId(CHANNEL_ID);
-
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
-        }
-
-        Notification notification = builder.build();
-
-        if (notificationManager != null) {
-            notificationManager.notify(notifId, notification);
-        }
-
-    }
-
-    private void postAsync() {
-        showNotif(getApplicationContext(), TITLE_NOTIFICATION, MESSAGE_NOTIFICATION, 100);
-    }
-
-    class AsyncTaskHome extends AsyncTask<Void, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            postAsync();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
     }
 }

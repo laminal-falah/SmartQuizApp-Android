@@ -39,7 +39,7 @@
     <string name="txtExitPress">Press back again to exit</string>
     <string name="txtLoading">Loading&#8230;</string>
 
-    <string name="txtSearch">Search Quiz...</string>
+    <string name="txtSearch">Search Quiz&#8230;</string>
     <string name="txtTypeSearch">Type Quiz</string>
     <string name="txtTitleKuis">Title Quis</string>
     <string name="txtSoalKuis">%s Item</string>
@@ -114,4 +114,10 @@
     <string name="txtHistoryWithDraw">History With Draw</string>
     <string name="txtBtnWithDraw">WithDraw</string>
     <string name="txtJumlahWithDraw">Rp. 0</string>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="default_notification_channel_name">notification</string>
+    <string name="content_title">Content title</string>
+    <string name="content_text">Content text</string>
+    <string name="subtext">Sub text</string>
+    <string name="send_notif">Send Notif</string>
 </resources>

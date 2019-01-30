@@ -1,11 +1,19 @@
 package com.kukitriplan.smartquizapp.skripsi.ui.auth;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +39,10 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
     private static final String TAG = AuthActivity.class.getSimpleName();
     private static long back_pressed;
     private KeyboardUtils keyboardUtils;
+
+    public static final int NOTIFICAITION_ID = 1;
+    public static String CHANNEL_ID = "CHANNEL_ID";
+    public static CharSequence CHANNEL_NAME = "SMARTQUIZAPP CHANNEL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +93,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
                         SharedPrefFirebase.getInstance(getApplicationContext()).saveDeviceToken(newToken);
                     }
         });
+        //notification();
     }
 
     @Override
@@ -157,4 +170,31 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
                 .commit();
         keyboardUtils.setupUI(findViewById(R.id.frame_container), this);
     }
+    /*
+    private void notification() {
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("kukitriplan.com"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_notifications_white_24dp))
+                .setContentTitle(getResources().getString(R.string.content_title))
+                .setContentText(getResources().getString(R.string.content_text))
+                .setSubText(getResources().getString(R.string.subtext))
+                .setAutoCancel(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            mBuilder.setChannelId(CHANNEL_ID);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
+        }
+
+        Notification notification = mBuilder.build();
+        if (manager != null) {
+            manager.notify(NOTIFICAITION_ID, notification);
+        }
+    }
+    */
 }
