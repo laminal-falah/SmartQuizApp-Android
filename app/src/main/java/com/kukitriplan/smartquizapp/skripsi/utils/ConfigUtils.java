@@ -15,4 +15,8 @@ public final class ConfigUtils {
             "api/v1/user/home",
             "api/v1/user/dashboard"
     };
+
+    public static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApw/km8PF/nMpumdV+9dOtfG6j8Sr1IB2AZm75Lkm2B2OJaiXTjvhPChD+WtiYck//zhRdfKJbIXLznaJY6ybom692mzDnzdGfR6rQGflY0WLiKsa7unHhi1NTc/s5Tk6X5GBqZy5IrObzZlQ9WaswRhp9FNC66oyWN8lLD2gVv7UPTEa6xG3ukgM+EAlab5iG1X7GFYxcO9+LGVy1ga/cN5p9CYseQyj2nmsO7aQgll9YDMcVEMIFg5Yw8T+xhD7zK6KKOiJE7+i9icNEYbcO2WrXNi5DbjiAC2qS9lNUzYG9SrgS7SyScYeZBlhRiQ5SQT755tvuLnyVCttNuOL0QIDAQAB";
+    public static final String SKU_BELI_SALDO = "belisaldo";
+
 }
