@@ -70,7 +70,7 @@ public class NotificationsHelper {
     }
 
     public int delete(int id) {
-        return mSqLiteDatabase.delete(TABLE_NOTIFICATION, _ID + " = " + id + "'", null);
+        return mSqLiteDatabase.delete(TABLE_NOTIFICATION, _ID + " = '" + id + "'", null);
     }
 
     public static void drop(Context mContext) {

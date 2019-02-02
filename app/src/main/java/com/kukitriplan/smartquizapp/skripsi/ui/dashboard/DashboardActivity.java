@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -30,10 +31,12 @@ import com.kukitriplan.smartquizapp.skripsi.ui.dashboard.navigation.ListKuisFrag
 import com.kukitriplan.smartquizapp.skripsi.ui.dashboard.navigation.PenjualanFragment;
 import com.kukitriplan.smartquizapp.skripsi.ui.dashboard.navigation.ProfileFragment;
 import com.kukitriplan.smartquizapp.skripsi.ui.dashboard.navigation.WithDrawFragment;
+import com.kukitriplan.smartquizapp.skripsi.ui.home.NotificationActivity;
 import com.kukitriplan.smartquizapp.skripsi.ui.home.navigation.FeedbackFragment;
 import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -61,6 +64,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetOrientationUtils.SetTitle(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         progressUtils = new ProgressUtils(this);
@@ -112,7 +116,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             back_pressed = System.currentTimeMillis();
         }
     }
-    /*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -128,13 +132,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.menu_notif) {
+            startActivity(new Intent(this, NotificationActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
         }
 
         return super.onOptionsItemSelected(item);
     }
-    */
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

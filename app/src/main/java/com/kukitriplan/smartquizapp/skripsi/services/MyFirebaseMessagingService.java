@@ -66,8 +66,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             JSONObject data = json.getJSONObject("data");
 
             String tipeNotif = data.getString("tipe");
-            if (tipeNotif.equals("aktivasiKuisAuthor")) {
 
+            if (tipeNotif.equals("aktivasiKuisAuthor")) {
+                String title = data.getString("title");
+                String subtitle = data.getString("subtitle");
+                String message = data.getString("message");
+
+                notifications.setTitle(title);
+                notifications.setSubtitle(subtitle);
+                notifications.setMessage(message);
+                notifications.setDate(getCurrentDate());
+
+                mHelper.insert(notifications);
+
+                mNotificationManager.NotificationAktivasiKuisAuthor(title,subtitle,message);
+
+                mHelper.close();
             } else if (tipeNotif.equals("kuisTerbaru")) {
                 String namaKuis = data.getString("namaKuis");
                 String slug = data.getString("slug");
@@ -91,8 +105,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 mHelper.close();
             } else if (tipeNotif.equals("lengkapiProfile")) {
+                String title = data.getString("title");
+                String subtitle = data.getString("subtitle");
+                String message = data.getString("message");
 
+                notifications.setTitle(title);
+                notifications.setSubtitle(subtitle);
+                notifications.setMessage(message);
+                notifications.setDate(getCurrentDate());
+
+                mHelper.insert(notifications);
+
+                mNotificationManager.NotificationProfile(title,subtitle,message);
+
+                mHelper.close();
             }
+
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
         } catch (Exception e) {

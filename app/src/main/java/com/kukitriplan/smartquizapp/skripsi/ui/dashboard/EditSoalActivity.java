@@ -20,6 +20,7 @@ import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.skripsi.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,6 +69,7 @@ public class EditSoalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetOrientationUtils.SetTitle(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_soal);
         ButterKnife.bind(this);

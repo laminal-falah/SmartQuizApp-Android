@@ -30,6 +30,7 @@ import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.skripsi.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,12 +70,13 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
     private RadioButton radioButton;
 
     private CountDownTimer mCountDownTimer;
-    int durasi = 0;
+
+    private int index = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetOrientationUtils.SetFull(this);
         super.onCreate(savedInstanceState);
-        //SetOrientationUtils.SetFull(this);
         setContentView(R.layout.activity_quis);
         ButterKnife.bind(this);
         toolbar.setTitle(getIntent().getStringExtra("judul"));
@@ -91,6 +93,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
         rvListSoal.setItemAnimator(new DefaultItemAnimator());
         rvListSoal.setHasFixedSize(true);
 
+        prefManager.saveSPBoolean(SharedLoginManager.SP_MAINKUIS, true);
         getSoal();
     }
 
@@ -115,7 +118,9 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
 
                             @Override
                             public void onFinish() {
-                                jawabSoal();
+                                if (prefManager.getMainKuis()) {
+                                    jawabSoal();
+                                }
                             }
                         }.start();
                         soals = new ArrayList<>(Arrays.asList(json.getSoal()));
@@ -204,8 +209,10 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
                     if (json.getKode().equals("1")) {
+                        prefManager.saveSPBoolean(SharedLoginManager.SP_MAINKUIS, false);
                         progressUtils.hide();
                         csLayout.setVisibility(View.INVISIBLE);
+                        mCountDownTimer.cancel();
                         Bundle bundle = new Bundle();
                         bundle.putDouble("NILAI", json.getNilai());
                         bundle.putString("IDKUIS", json.getKuis().getId_kuis());

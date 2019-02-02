@@ -33,7 +33,7 @@ public final class PopupUtils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(ConfigUtils.BASE_URL[1]))
+                activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(ConfigUtils.BASE_URL[0]))
                         /*.setClassName(
                                 new Intent(Intent.ACTION_VIEW, Uri.parse(ConfigUtils.BASE_URL)).resolveActivityInfo(activity.getPackageManager(),0).packageName,
                                 new Intent(Intent.ACTION_VIEW, Uri.parse(ConfigUtils.BASE_URL)).resolveActivityInfo(activity.getPackageManager(),0).name

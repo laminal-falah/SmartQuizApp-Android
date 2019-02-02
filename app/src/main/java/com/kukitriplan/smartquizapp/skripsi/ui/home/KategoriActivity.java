@@ -26,6 +26,7 @@ import com.kukitriplan.smartquizapp.skripsi.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.skripsi.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.SnackBarUtils;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class KategoriActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetOrientationUtils.SetTitle(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setContentView(R.layout.activity_kategori);

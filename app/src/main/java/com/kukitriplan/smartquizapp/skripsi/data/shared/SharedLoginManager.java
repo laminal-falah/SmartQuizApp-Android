@@ -13,10 +13,8 @@ public class SharedLoginManager {
     public static final String SP_INTRO = "SP_INTRO";
     public static final String SP_TOKEN = "SP_TOKEN";
     public static final String SP_SALDO = "SP_SALDO";
-    public static final int SP_ID_NOTIF = 0;
-    public static final String SP_NOTIF = "SP_NOTIF";
     public static final String SP_IDKUIS = "SP_IDKUIS";
-    public static final int SP_VERSION_DB = 1;
+    public static final String SP_MAINKUIS = "SP_MAINKUIS";
 
     private final SharedPreferences sp;
     private final SharedPreferences.Editor editor;
@@ -66,16 +64,12 @@ public class SharedLoginManager {
         return sp.getBoolean(SP_LOGON, false);
     }
 
-    public int getSpIdNotif() {
-        return sp.getInt(SP_NOTIF, 0);
-    }
-
-    public int getSpVersionDb() {
-        return sp.getInt(SP_APP, 1);
-    }
-
     public String getSpIdkuis() {
         return sp.getString(SP_IDKUIS, "");
+    }
+
+    public Boolean getMainKuis() {
+        return sp.getBoolean(SP_MAINKUIS, false);
     }
 
     public void setSpIntro(boolean firstTime) {
@@ -93,7 +87,6 @@ public class SharedLoginManager {
         editor.putString(SP_EMAIL, "");
         editor.putString(SP_NAME, "");
         editor.putBoolean(SP_LOGON, false);
-        editor.putInt(SP_NOTIF, 0);
         editor.commit();
     }
 }

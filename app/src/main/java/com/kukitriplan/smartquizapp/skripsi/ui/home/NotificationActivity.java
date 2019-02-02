@@ -1,9 +1,11 @@
 package com.kukitriplan.smartquizapp.skripsi.ui.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,7 +20,10 @@ import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.skripsi.adapter.NotificationAdapter;
 import com.kukitriplan.smartquizapp.skripsi.data.db.NotificationsHelper;
 import com.kukitriplan.smartquizapp.skripsi.data.model.Notifications;
+import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedLoginManager;
+import com.kukitriplan.smartquizapp.skripsi.ui.dashboard.DashboardActivity;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,12 +39,15 @@ public class NotificationActivity extends AppCompatActivity {
 
     private ProgressUtils progressUtils;
 
+    private SharedLoginManager prefManager;
+
     private ArrayList<Notifications> notifications;
     private NotificationAdapter mAdapter;
     private NotificationsHelper mHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetOrientationUtils.SetTitle(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         ButterKnife.bind(this);
@@ -76,12 +84,17 @@ public class NotificationActivity extends AppCompatActivity {
 
         new LoadNotificationAsync().execute();
 
+        prefManager = new SharedLoginManager(this);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        if (prefManager.getSpLevel().equals("user")) {
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        } else {
+            startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+        }
     }
 
     @Override

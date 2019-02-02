@@ -310,22 +310,4 @@ public interface ApiServices {
             @Query("d") String d,
             @Query("email") String email
     );
-
-    @POST("api/v1/user/notification")
-    Call<NotificationResponse> getNotification(
-            @Query("_token") String token,
-            @Query("f") String f,
-            @Query("d") String d,
-            @Query("email") String email
-    );
-
-    @POST("api/v1/user/notification")
-    @FormUrlEncoded
-    Call<NotificationResponse> saveToDbNotification(
-            @Query("_token") String token,
-            @Query("f") String f,
-            @Query("d") String d,
-            @Query("email") String email,
-            @FieldMap Map<String, String> params
-    );
 }

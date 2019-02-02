@@ -39,6 +39,7 @@ import com.kukitriplan.smartquizapp.skripsi.ui.auth.AuthActivity;
 import com.kukitriplan.smartquizapp.skripsi.utils.ImageUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -110,6 +111,7 @@ public class EditKuisActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetOrientationUtils.SetTitle(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_kuis);
         ButterKnife.bind(this);

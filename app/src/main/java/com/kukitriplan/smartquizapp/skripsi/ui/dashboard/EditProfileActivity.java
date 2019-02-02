@@ -33,6 +33,7 @@ import com.kukitriplan.smartquizapp.skripsi.ui.home.navigation.UserFragment;
 import com.kukitriplan.smartquizapp.skripsi.utils.DatePickerSpinner;
 import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
+import com.kukitriplan.smartquizapp.skripsi.utils.SetOrientationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,6 +90,7 @@ public class EditProfileActivity extends AppCompatActivity implements UserFragme
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetOrientationUtils.SetTitle(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);

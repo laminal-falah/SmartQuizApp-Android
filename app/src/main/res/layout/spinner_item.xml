@@ -5,5 +5,5 @@
     android:fontFamily="sans-serif-medium"
     android:padding="10dp"
     android:textColor="@color/com_facebook_blue"
-    android:textSize="18sp"
+    android:textSize="14sp"
     android:textStyle="italic" />
