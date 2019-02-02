@@ -81,7 +81,7 @@ public class KategoriActivity extends AppCompatActivity {
         rvKuis.setLayoutManager(layoutManager);
         rvKuis.setItemAnimator(new DefaultItemAnimator());
         rvKuis.setHasFixedSize(true);
-
+        rvKuis.smoothScrollToPosition(view.getVerticalScrollbarPosition());
         tvKategori = findViewById(R.id.tvTitleKategori);
         tvjumlah = findViewById(R.id.tvJumlahData);
 

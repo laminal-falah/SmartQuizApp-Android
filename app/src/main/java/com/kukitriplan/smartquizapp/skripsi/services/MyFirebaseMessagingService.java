@@ -119,6 +119,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 mNotificationManager.NotificationProfile(title,subtitle,message);
 
                 mHelper.close();
+            } else if (tipeNotif.equals("topUpSaldo")) {
+                String title = data.getString("title");
+                String subtitle = data.getString("subtitle");
+                String message = data.getString("message");
+
+                notifications.setTitle(title);
+                notifications.setSubtitle(subtitle);
+                notifications.setMessage(message);
+                notifications.setDate(getCurrentDate());
+
+                mHelper.insert(notifications);
+
+                mNotificationManager.NotificationTopUp(title,subtitle,message);
+
+                mHelper.close();
             }
 
         } catch (JSONException e) {

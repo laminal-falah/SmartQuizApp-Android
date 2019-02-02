@@ -79,7 +79,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
-        //FirebaseApp.initializeApp(this);
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
@@ -93,7 +93,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
                         SharedPrefFirebase.getInstance(getApplicationContext()).saveDeviceToken(newToken);
                     }
         });
-        //notification();
     }
 
     @Override
@@ -170,31 +169,4 @@ public class AuthActivity extends AppCompatActivity implements AuthFragment, Log
                 .commit();
         keyboardUtils.setupUI(findViewById(R.id.frame_container), this);
     }
-    /*
-    private void notification() {
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("kukitriplan.com"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_notifications_white_24dp)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_notifications_white_24dp))
-                .setContentTitle(getResources().getString(R.string.content_title))
-                .setContentText(getResources().getString(R.string.content_text))
-                .setSubText(getResources().getString(R.string.subtext))
-                .setAutoCancel(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
-            mBuilder.setChannelId(CHANNEL_ID);
-            if (manager != null) {
-                manager.createNotificationChannel(channel);
-            }
-        }
-
-        Notification notification = mBuilder.build();
-        if (manager != null) {
-            manager.notify(NOTIFICAITION_ID, notification);
-        }
-    }
-    */
 }

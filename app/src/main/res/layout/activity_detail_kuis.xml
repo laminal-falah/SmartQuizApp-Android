@@ -38,7 +38,8 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/iv_cover_detail_kuis"
@@ -76,14 +77,14 @@
 
                 <android.support.v7.widget.AppCompatRatingBar
                     android:id="@+id/ratingBarDetail"
+                    style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:isIndicator="true"
                     android:numStars="5"
                     android:rating="5"
                     android:stepSize="0.1"
                     android:theme="@style/RatingBar"
-                    android:isIndicator="true"
-                    style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_harga_detail_kuis" />

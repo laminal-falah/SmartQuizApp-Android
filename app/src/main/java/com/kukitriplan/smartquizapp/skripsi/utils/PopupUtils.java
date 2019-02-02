@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.kukitriplan.smartquizapp.R;
+import com.kukitriplan.smartquizapp.skripsi.adapter.NotificationAdapter;
 
 public final class PopupUtils {
 
@@ -97,5 +99,20 @@ public final class PopupUtils {
         });
         builder.create();
         builder.show();
+    }
+
+    public static void popTopUp(@NonNull final Context context, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

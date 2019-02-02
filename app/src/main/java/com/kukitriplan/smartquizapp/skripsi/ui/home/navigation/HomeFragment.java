@@ -56,7 +56,6 @@ public class HomeFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
-    private Toolbar toolbar;
 
     @BindView(R.id.rv_kategori) RecyclerView rvKategori;
     @BindView(R.id.rv_kuis) RecyclerView rvKuis;
@@ -124,7 +123,7 @@ public class HomeFragment extends Fragment {
 
         prefManager = new SharedLoginManager(home.getContext());
         tvError.setVisibility(View.INVISIBLE);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 6);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         rvKategori.setLayoutManager(layoutManager);
         rvKategori.setItemAnimator(new DefaultItemAnimator());
         rvKategori.setHasFixedSize(true);

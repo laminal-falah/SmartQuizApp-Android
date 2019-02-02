@@ -141,6 +141,31 @@ public class NotificationUtils {
         }
     }
 
+    public void NotificationTopUp(String title, String subtitle, String message) {
+        uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp)
+                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notifications_white_24dp))
+                .setContentTitle(title)
+                .setSubText(subtitle)
+                .setContentText(message)
+                .setSound(uri)
+                .setAutoCancel(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mNotificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            mBuilder.setChannelId(CHANNEL_ID);
+            if (mNotificationManager != null) {
+                mNotificationManager.createNotificationChannel(mNotificationChannel);
+            }
+        }
+
+        mNotification = mBuilder.build();
+        if (mNotificationManager != null) {
+            mNotificationManager.notify(ID_BIG_NOTIFICATION, mNotification);
+        }
+    }
+
     private Bitmap getBitmapFromURL(String strURL) {
         try {
             URL url = new URL(strURL);

@@ -12,7 +12,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +30,7 @@ import com.kukitriplan.smartquizapp.skripsi.data.model.HistoryTopUp;
 import com.kukitriplan.smartquizapp.skripsi.data.response.HomeResponse;
 import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedLoginManager;
 import com.kukitriplan.smartquizapp.skripsi.ui.auth.AuthActivity;
-import com.kukitriplan.smartquizapp.skripsi.ui.home.HomeActivity;
-import com.kukitriplan.smartquizapp.skripsi.util.IabHelper;
-import com.kukitriplan.smartquizapp.skripsi.util.IabResult;
-import com.kukitriplan.smartquizapp.skripsi.util.Inventory;
-import com.kukitriplan.smartquizapp.skripsi.util.Purchase;
-import com.kukitriplan.smartquizapp.skripsi.utils.ConfigUtils;
+import com.kukitriplan.smartquizapp.skripsi.ui.home.BillingActivity;
 import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
@@ -87,14 +81,6 @@ public class TopUpFragment extends Fragment {
 
     private static final String s = "SALDO";
 
-    // Biling
-    private boolean isAlreadyPurchase;
-    private String PUBLIC_KEY = ConfigUtils.PUBLIC_KEY;
-    private String SKU_BELI_SALDO = ConfigUtils.SKU_BELI_SALDO;
-    private IabHelper mIabHelper;
-    private int RC_REQUEST = 115;
-    private String payload = "";
-
     public TopUpFragment() {
         // Required empty public constructor
     }
@@ -144,11 +130,10 @@ public class TopUpFragment extends Fragment {
         rvHistoryVoucher.addItemDecoration(decoration);
         rvHistoryVoucher.setItemAnimator(new DefaultItemAnimator());
         rvHistoryVoucher.setHasFixedSize(true);
+        rvHistoryVoucher.smoothScrollToPosition(view.getVerticalScrollbarPosition());
         services = RetrofitBuilder.createServices(ApiServices.class);
 
         //getHistoryTopUp();
-
-        initBilling();
 
         txtVoucher.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -295,71 +280,8 @@ public class TopUpFragment extends Fragment {
         });
     }
 
-    private void initBilling() {
-        mIabHelper = new IabHelper(view.getContext(), PUBLIC_KEY);
-        mIabHelper.enableDebugLogging(false);
-        mIabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    return;
-                }
-                if (mIabHelper == null) {
-                    return;
-                }
-                try {
-                    mIabHelper.queryInventoryAsync(new IabHelper.QueryInventoryFinishedListener() {
-                        @Override
-                        public void onQueryInventoryFinished(IabResult result, Inventory inv) {
-                            if (mIabHelper == null) {
-                                return;
-                            }
-                            if (result.isFailure()) {
-                                return;
-                            }
-                            isAlreadyPurchase = inv.hasPurchase(SKU_BELI_SALDO);
-                            if (isAlreadyPurchase) {
-                                Toast.makeText(getActivity(), ""+result, Toast.LENGTH_SHORT).show();
-                                Log.i(TAG, "onQueryInventoryFinished: " + result);
-                            } else {
-                                Toast.makeText(getActivity(), ""+result, Toast.LENGTH_SHORT).show();
-                                Log.i(TAG, "onQueryInventoryFinished: " + result);
-                            }
-                        }
-                    });
-                } catch (IabHelper.IabAsyncInProgressException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void purchaseSaldo() {
-        try {
-            mIabHelper.launchPurchaseFlow(TopUpFragment.this.getActivity(), SKU_BELI_SALDO, RC_REQUEST, new IabHelper.OnIabPurchaseFinishedListener() {
-                @Override
-                public void onIabPurchaseFinished(IabResult result, Purchase info) {
-                    if (mIabHelper == null)
-                        return;
-
-                    if (result.isFailure()) {
-                        //Error purchasing
-                        return;
-                    }
-
-                    //Purchase successful
-                    if (info.getSku().equals(SKU_BELI_SALDO)) {
-                        PopupUtils.loadError(view.getContext(), "In-App-Purchase", ""+result);
-                        Toast.makeText(getContext(), "Beli Item Saldo", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }, payload);
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
-        }
-    }
     @OnClick(R.id.btnBayarGoogle) void bayarSaldo() {
-        purchaseSaldo();
+        startActivity(new Intent(getContext(), BillingActivity.class));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

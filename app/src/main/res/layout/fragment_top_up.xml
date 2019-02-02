@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".skripsi.ui.home.navigation.TopUpFragment">
+    tools:context=".skripsi.ui.home.HomeActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedTopUp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp">
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/tvSaldo"
@@ -45,8 +47,8 @@
                     android:hint="Kode Voucher"
                     android:imeOptions="actionSend"
                     android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="16" />
+                    android:maxLength="16"
+                    android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -66,7 +68,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Beli Saldo"
+                android:text="Beli Saldo dengan G-Pay"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

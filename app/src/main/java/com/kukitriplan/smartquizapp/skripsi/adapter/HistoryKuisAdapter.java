@@ -45,7 +45,6 @@ public class HistoryKuisAdapter extends RecyclerView.Adapter<HistoryKuisAdapter.
         viewHistory.tvNomor.setText(historyKuis.getNomor());
         viewHistory.tvJumlah.setText(historyKuis.getNamaKuis());
         viewHistory.tvTgl.setText(historyKuis.getNilai());
-        //viewHistory.setItemClickListener(this);
         viewHistory.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +70,8 @@ public class HistoryKuisAdapter extends RecyclerView.Adapter<HistoryKuisAdapter.
                 TextView tvDeskripsi = bottomSheetLayout.findViewById(R.id.tv_detail_sheet);
                 String detail = "Nama Kuis : " + historyKuis.getNamaKuis() + "\n" +
                                 "Harga : "  + historyKuis.getHarga() + "\n" +
-                                "Jumlah Soal : " + historyKuis.getSoal() + "\n" +
-                                "Durasi Kuis : " + historyKuis.getDurasi() + "\n" +
+                                "Jumlah Soal : " + historyKuis.getSoal() + " Soal" + " \n" +
+                                "Durasi Kuis : " + historyKuis.getDurasi() + " Menit" +"\n" +
                                 "Jawaban Benar : " + historyKuis.getBenar() + "\n" +
                                 "Jawaban Salah : " + historyKuis.getSalah() + "\n" +
                                 "Nilai : " + historyKuis.getNilai() + "\n";

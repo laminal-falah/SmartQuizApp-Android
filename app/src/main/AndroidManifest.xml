@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.android.vending.BILLING"/>
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:name=".skripsi.MyApp"
@@ -30,22 +30,18 @@
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id"/>
-
-        <meta-data android:name="com.google.android.gms.version"
+            android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -54,8 +50,7 @@
             android:name=".skripsi.services.ServiceApps"
             android:enabled="true" />
 
-        <service
-            android:name=".skripsi.services.MyFirebaseMessagingService">
+        <service android:name=".skripsi.services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -84,14 +79,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".skripsi.ui.WelcomeActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-
         <activity
             android:name=".skripsi.ui.auth.AuthActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -109,7 +102,6 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".skripsi.ui.home.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -117,94 +109,86 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-
         <activity
             android:name=".skripsi.ui.barcode.ScanBarcodeActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.home.KategoriActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.home.DetailKuisActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.home.NotificationActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.home.SeacrhingActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".skripsi.ui.home.HomeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".skripsi.ui.home.kuis.QuisActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".skripsi.ui.dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".skripsi.ui.dashboard.EditProfileActivity"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.dashboard.PasswordActivity"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.dashboard.EditKuisActivity"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.dashboard.EditSoalActivity"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.dashboard.ListSoalActivity"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".skripsi.ui.dashboard.BuatSoalActivity"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".skripsi.ui.home.BillingActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-
     </application>
 
 </manifest>

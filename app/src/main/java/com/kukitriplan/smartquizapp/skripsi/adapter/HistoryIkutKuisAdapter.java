@@ -42,7 +42,7 @@ public class HistoryIkutKuisAdapter extends RecyclerView.Adapter<HistoryIkutKuis
     public void onBindViewHolder(@NonNull ViewHolderIkut viewHolderIkut, int i) {
         final HistoryIkutKuis ikutKuis = historyIkutKuis.get(i);
         viewHolderIkut.tvNomor.setText(ikutKuis.getNomor() + " " + ikutKuis.getJudul());
-        viewHolderIkut.tvJumlah.setText(ikutKuis.getPemain());
+        viewHolderIkut.tvJumlah.setText(" "+ikutKuis.getPemain());
         viewHolderIkut.tvTgl.setText(ikutKuis.getTanggal());
         viewHolderIkut.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

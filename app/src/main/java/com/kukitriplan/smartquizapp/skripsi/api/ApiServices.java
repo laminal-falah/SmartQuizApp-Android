@@ -145,6 +145,16 @@ public interface ApiServices {
 
     @POST("api/v1/user/home")
     @FormUrlEncoded
+    Call<HomeResponse> submitInapp(
+            @Query("_token") String token,
+            @Query("f") String f,
+            @Query("d") String d,
+            @Query("email") String email,
+            @FieldMap Map<String, String> params
+    );
+
+    @POST("api/v1/user/home")
+    @FormUrlEncoded
     Call<HomeResponse> kirimFeedback(
             @Field("info") String info,
             @Field("rating") float rating,

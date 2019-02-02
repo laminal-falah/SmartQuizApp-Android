@@ -9,16 +9,17 @@
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
             <Button
                 android:id="@+id/btnLogout"
@@ -55,10 +56,11 @@
                 android:id="@+id/cvDetailProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:padding="8dp"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardUseCompatPadding="true"
-                app:layout_constraintTop_toBottomOf="@+id/btnUbahPassword">
+                app:layout_constraintTop_toBottomOf="@+id/btnUbahPassword"
+                tools:layout_editor_absoluteX="8dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"

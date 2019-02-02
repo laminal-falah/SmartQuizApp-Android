@@ -34,6 +34,6 @@ public class SharedPrefFirebase {
     //this method will fetch the device token from shared preferences
     public String getDeviceToken(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(TAG_TOKEN, null);
+        return sharedPreferences.getString(TAG_TOKEN, null);
     }
 }
