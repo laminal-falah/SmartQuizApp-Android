@@ -1,6 +1,5 @@
 package com.kukitriplan.smartquizapp.skripsi.ui.dashboard.navigation;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kukitriplan.smartquizapp.R;
+import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class DashboardFragment extends Fragment {
 
+    private View view;
+    private ProgressUtils progressUtils;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -22,8 +21,10 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        progressUtils = new ProgressUtils(getContext());
+        progressUtils.hide();
+        return view;
     }
 
 }

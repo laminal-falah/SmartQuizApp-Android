@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -97,6 +98,7 @@ public class ListKuisFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        prefManager = new SharedLoginManager(getContext());
         progressUtils = new ProgressUtils(getContext());
         keyboardUtils = new KeyboardUtils();
         progressUtils.hide();
@@ -104,11 +106,9 @@ public class ListKuisFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        prefManager = new SharedLoginManager(getContext());
         view = inflater.inflate(R.layout.fragment_list_kuis, container, false);
         ButterKnife.bind(this, view);
         services = RetrofitBuilder.createServices(ApiServices.class);
-
         return view;
     }
 
@@ -117,7 +117,6 @@ public class ListKuisFragment extends Fragment {
         super.onResume();
         getListKuis();
     }
-
 
     private void getListKuis() {
         progressUtils.show();

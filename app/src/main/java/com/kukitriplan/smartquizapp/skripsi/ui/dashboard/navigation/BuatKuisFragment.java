@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -86,6 +87,8 @@ public class BuatKuisFragment extends Fragment {
     @BindView(R.id.btnPilihGambar) Button btnPilihGambar;
     @BindView(R.id.btnTmbhKuis) Button btnTmbhKuis;
 
+    @BindView(R.id.nestedScrollView2) NestedScrollView nsLayout;
+
     private TextView tvErrorKategori, tvErrorMapel, tvErrorHarga;
 
     private String idKategori, idMapel, judul, hargaKuis, deskripsi, acakKuis = "0", tmplBahas = "0";
@@ -134,6 +137,10 @@ public class BuatKuisFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        prefManager = new SharedLoginManager(getContext());
+        keyboardUtils = new KeyboardUtils();
+        progressUtils = new ProgressUtils(getContext());
+        progressUtils.hide();
     }
 
     @Override
@@ -154,10 +161,7 @@ public class BuatKuisFragment extends Fragment {
             }
         });
         services = RetrofitBuilder.createServices(ApiServices.class);
-        prefManager = new SharedLoginManager(getContext());
-        keyboardUtils = new KeyboardUtils();
-        progressUtils = new ProgressUtils(getContext());
-        progressUtils.hide();
+
 
         tvJmlhSoal.setText(String.valueOf(jmlhSoal));
         btnMinSoal.setOnClickListener(new View.OnClickListener() {
@@ -282,6 +286,7 @@ public class BuatKuisFragment extends Fragment {
 
                     if (json.getKode().equals("1")) {
                         progressUtils.hide();
+                        nsLayout.setVisibility(View.VISIBLE);
                         kategoris = new ArrayList<>(Arrays.asList(json.getKategori()));
                         final List<Kategori> kategoriList = new ArrayList<>();
                         for (int i = 0; i < kategoris.size(); i++) {
@@ -382,15 +387,20 @@ public class BuatKuisFragment extends Fragment {
                                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                         Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
+                        progressUtils.hide();
                         Toast.makeText(getActivity(), json.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else if (response.code() == 502) {
+                    progressUtils.hide();
                     Toast.makeText(getContext(), "502 Connection Timed Out", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 503) {
+                    progressUtils.hide();
                     Toast.makeText(getContext(), "503", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 404) {
+                    progressUtils.hide();
                     Toast.makeText(getContext(), "404 Not Found", Toast.LENGTH_SHORT).show();
                 } else if (response.code() == 403) {
+                    progressUtils.hide();
                     Toast.makeText(getContext(), "403", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -398,6 +408,7 @@ public class BuatKuisFragment extends Fragment {
             @Override
             public void onFailure(Call<DashboardResponse> call, Throwable t) {
                 t.getMessage();
+                progressUtils.hide();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

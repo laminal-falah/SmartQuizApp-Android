@@ -71,7 +71,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         keyboardUtils = new KeyboardUtils();
         prefManager = new SharedLoginManager(this);
         services = RetrofitBuilder.createServices(ApiServices.class);
-
+        progressUtils.hide();
         setContentView(R.layout.activity_dashboard);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.title_dashboard, prefManager.getSpName()));
@@ -93,13 +93,19 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         navigationView.getMenu().getItem(0).setChecked(true);
         loadFragment(new DashboardFragment());
-        progressUtils.hide();
+
 
         if (!prefManager.getSpLogon()) {
             startActivity(new Intent(this, AuthActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressUtils.hide();
     }
 
     @Override

@@ -82,8 +82,8 @@ public class ListKuisAuthorAdapter extends RecyclerView.Adapter<ListKuisAuthorAd
                              "Harga Kuis : " + kuis1.getHarga() + "\n" +
                              "Author : " + kuis1.getAuthor() + "\n" +
                              "Kategori : " + kuis1.getNm_kategori() + "\n" +
-                             "Mata Pelajaran : " + kuis1.getNm_mapel() + "\n" +
-                             "Deskripsi : " + kuis1.getDeskripsi() + "\n";
+                             "Mata Pelajaran : " + kuis1.getNm_mapel() + "\n";// +
+                             //"Deskripsi : " + kuis1.getDeskripsi() + "\n";
                 tvDeskripsi.setText(str);
                 mBottomSheetDialog = new BottomSheetDialog(context);
                 mBottomSheetDialog.setContentView(bottomSheetLayout);
