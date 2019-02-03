@@ -1,6 +1,7 @@
 package com.kukitriplan.smartquizapp.skripsi.ui.dashboard;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -162,7 +163,7 @@ public class EditSoalActivity extends AppCompatActivity {
         call = services.getItemSoal(prefManager.getSpToken(), "dashboard","editSoal", id);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -202,7 +203,7 @@ public class EditSoalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -244,7 +245,7 @@ public class EditSoalActivity extends AppCompatActivity {
         call = services.ubahSoal(prefManager.getSpToken(), "dashboard", "ubahSoal", id, params);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -267,7 +268,7 @@ public class EditSoalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

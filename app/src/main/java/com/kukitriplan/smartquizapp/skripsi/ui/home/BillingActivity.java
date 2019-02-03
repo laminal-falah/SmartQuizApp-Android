@@ -277,7 +277,7 @@ public class BillingActivity extends AppCompatActivity {
         call = services.submitInapp(prefManager.getSpToken(), "home", "inapp", prefManager.getSpEmail(), params);
         call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 if (response.isSuccessful()) {
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
@@ -295,7 +295,7 @@ public class BillingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                 progressUtils.hide();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }

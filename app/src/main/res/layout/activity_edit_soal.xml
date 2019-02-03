@@ -45,7 +45,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNomor" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNomor"
+            android:autofillHints="" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/layoutPilihan"
@@ -86,7 +87,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/rbA"
                     app:layout_constraintStart_toEndOf="@+id/rbA"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:autofillHints="" />
 
                 <RadioButton
                     android:id="@+id/rbB"
@@ -109,7 +111,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/rbB"
                     app:layout_constraintStart_toEndOf="@+id/rbB"
-                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanA" />
+                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanA"
+                    android:autofillHints="" />
 
                 <RadioButton
                     android:id="@+id/rbC"
@@ -132,7 +135,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/rbC"
                     app:layout_constraintStart_toEndOf="@+id/rbC"
-                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanB" />
+                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanB"
+                    android:autofillHints="" />
 
                 <RadioButton
                     android:id="@+id/rbD"
@@ -155,7 +159,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/rbD"
                     app:layout_constraintStart_toEndOf="@+id/rbD"
-                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanC" />
+                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanC"
+                    android:autofillHints="" />
 
                 <RadioButton
                     android:id="@+id/rbE"
@@ -178,7 +183,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/rbE"
                     app:layout_constraintStart_toEndOf="@+id/rbE"
-                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanD" />
+                    app:layout_constraintTop_toBottomOf="@+id/edtPilihanD"
+                    android:autofillHints="" />
 
             </RadioGroup>
 
@@ -199,7 +205,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutPilihan" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutPilihan"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/btnUbahSoal"

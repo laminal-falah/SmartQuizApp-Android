@@ -15,6 +15,8 @@
 
 package com.kukitriplan.smartquizapp.skripsi.utilBilling;
 
+import android.support.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,6 +63,7 @@ public class Purchase {
     public String getSignature() { return mSignature; }
     public boolean isAutoRenewing() { return mIsAutoRenewing; }
 
+    @NonNull
     @Override
     public String toString() { return "PurchaseInfo(type:" + mItemType + "):" + mOriginalJson; }
 }

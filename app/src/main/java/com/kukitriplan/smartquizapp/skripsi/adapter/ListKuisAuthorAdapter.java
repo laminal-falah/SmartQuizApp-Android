@@ -58,7 +58,7 @@ public class ListKuisAuthorAdapter extends RecyclerView.Adapter<ListKuisAuthorAd
                         v.getContext().startActivity(new Intent(v.getContext(), BuatSoalActivity.class)
                                 .putExtra("slugKuis", kuis1.getSlug())
                                 .putExtra("judulKuis", kuis1.getJudul())
-                                .putExtra("nomorSoal", kuis1.getNomorSoal()));;
+                                .putExtra("nomorSoal", kuis1.getNomorSoal()));
                     }
                 });
                 (bottomSheetLayout.findViewById(R.id.btnListSoal)).setOnClickListener(new View.OnClickListener() {

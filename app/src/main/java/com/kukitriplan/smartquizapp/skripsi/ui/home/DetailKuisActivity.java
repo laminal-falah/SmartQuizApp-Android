@@ -181,7 +181,7 @@ public class DetailKuisActivity extends AppCompatActivity {
         call = services.mainKuis(prefManager.getSpToken(), "home", "mainKuis", prefManager.getSpEmail(), getIntent().getStringExtra("slug"));
         call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 if (response.isSuccessful()) {
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
@@ -205,7 +205,7 @@ public class DetailKuisActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

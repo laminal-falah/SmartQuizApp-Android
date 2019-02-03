@@ -2,6 +2,7 @@ package com.kukitriplan.smartquizapp.skripsi.ui.dashboard;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -182,7 +183,7 @@ public class BuatSoalActivity extends AppCompatActivity {
         call = services.simpanSoal(prefManager.getSpToken(),"dashboard","simpanSoal", slug, params);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -231,7 +232,7 @@ public class BuatSoalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

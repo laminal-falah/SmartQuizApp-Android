@@ -98,7 +98,7 @@ public class WithDrawFragment extends Fragment {
         call = services.getHistoryWithDraw(prefManager.getSpToken(), "dashboard", "historyWithDraw", prefManager.getSpEmail());
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -139,7 +139,7 @@ public class WithDrawFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 progressUtils.hide();
                 tvMsg.setVisibility(View.VISIBLE);
                 tvMsg.setText(t.getMessage());
@@ -153,7 +153,7 @@ public class WithDrawFragment extends Fragment {
         call = services.withDraw(prefManager.getSpToken(), "dashboard", "withDraw", prefManager.getSpEmail(), jmlh);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -176,7 +176,7 @@ public class WithDrawFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

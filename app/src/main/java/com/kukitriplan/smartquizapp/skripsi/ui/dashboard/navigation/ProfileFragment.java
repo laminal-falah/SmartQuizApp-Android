@@ -2,7 +2,6 @@ package com.kukitriplan.smartquizapp.skripsi.ui.dashboard.navigation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +21,6 @@ import com.kukitriplan.smartquizapp.R;
 import com.kukitriplan.smartquizapp.skripsi.adapter.ProfileAdapter;
 import com.kukitriplan.smartquizapp.skripsi.api.ApiServices;
 import com.kukitriplan.smartquizapp.skripsi.api.RetrofitBuilder;
-import com.kukitriplan.smartquizapp.skripsi.data.db.DatabaseHelper;
 import com.kukitriplan.smartquizapp.skripsi.data.db.NotificationsHelper;
 import com.kukitriplan.smartquizapp.skripsi.data.json.AuthJson;
 import com.kukitriplan.smartquizapp.skripsi.data.json.HomeJson;
@@ -37,7 +35,6 @@ import com.kukitriplan.smartquizapp.skripsi.utils.KeyboardUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.PopupUtils;
 import com.kukitriplan.smartquizapp.skripsi.utils.ProgressUtils;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import butterknife.BindView;

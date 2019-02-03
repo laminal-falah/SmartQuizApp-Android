@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -242,7 +243,7 @@ public class EditKuisActivity extends AppCompatActivity {
         call = services.getItemKuis(prefManager.getSpToken(), "dashboard", "editKuis", ID);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -269,7 +270,7 @@ public class EditKuisActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getDropDownView(position, convertView, parent);
                                 TextView tv = (TextView) view;
                                 if(position == 0) {
@@ -320,7 +321,7 @@ public class EditKuisActivity extends AppCompatActivity {
                                 }
                             }
                             @Override
-                            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getDropDownView(position, convertView, parent);
                                 TextView tv = (TextView) view;
                                 if(position == 0){
@@ -373,7 +374,7 @@ public class EditKuisActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 t.getMessage();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -393,7 +394,7 @@ public class EditKuisActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if(position == 0){
@@ -430,7 +431,7 @@ public class EditKuisActivity extends AppCompatActivity {
         call = services.getItemKuis(prefManager.getSpToken(), "dashboard","editKuis", ID);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -513,7 +514,7 @@ public class EditKuisActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 progressUtils.hide();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -604,7 +605,7 @@ public class EditKuisActivity extends AppCompatActivity {
         call = services.ubahKuis(prefManager.getSpToken(), "dashboard", "ubahKuis", ID, params);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -645,7 +646,7 @@ public class EditKuisActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 progressUtils.hide();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }

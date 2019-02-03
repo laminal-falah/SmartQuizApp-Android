@@ -82,7 +82,7 @@ public class ListSoalActivity extends AppCompatActivity {
         call = services.getListSoalAuthor(prefManager.getSpToken(), "dashboard", "listSoal", slug);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(final Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull final Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     final DashboardJson json = res.getDashboard();
@@ -162,7 +162,7 @@ public class ListSoalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 progressUtils.hide();
                 tvError.setVisibility(View.VISIBLE);
                 tvError.setText(t.getMessage());
@@ -174,7 +174,7 @@ public class ListSoalActivity extends AppCompatActivity {
         call = services.deleteSoal(prefManager.getSpToken(), "dashboard","hapusSoal", id);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -188,7 +188,7 @@ public class ListSoalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

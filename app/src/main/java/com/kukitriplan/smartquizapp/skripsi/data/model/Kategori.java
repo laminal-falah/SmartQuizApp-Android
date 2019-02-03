@@ -1,5 +1,7 @@
 package com.kukitriplan.smartquizapp.skripsi.data.model;
 
+import android.support.annotation.NonNull;
+
 public class Kategori {
 
     private String id;
@@ -36,6 +38,7 @@ public class Kategori {
         this.icon = icon;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return title;

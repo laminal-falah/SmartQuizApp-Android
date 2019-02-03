@@ -1,5 +1,7 @@
 package com.kukitriplan.smartquizapp.skripsi.data.model;
 
+import android.support.annotation.NonNull;
+
 public class Mapel {
     private String id;
     private String mapel;
@@ -25,6 +27,7 @@ public class Mapel {
         this.mapel = mapel;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return mapel;

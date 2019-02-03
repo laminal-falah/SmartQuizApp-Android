@@ -279,7 +279,7 @@ public class BuatKuisFragment extends Fragment {
         call = services.getKonfigKuis(prefManager.getSpToken(), "dashboard", "buatKuis");
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -307,7 +307,7 @@ public class BuatKuisFragment extends Fragment {
                             }
 
                             @Override
-                            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getDropDownView(position, convertView, parent);
                                 TextView tv = (TextView) view;
                                 if(position == 0) {
@@ -353,7 +353,7 @@ public class BuatKuisFragment extends Fragment {
                                 }
                             }
                             @Override
-                            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getDropDownView(position, convertView, parent);
                                 TextView tv = (TextView) view;
                                 if(position == 0){
@@ -406,7 +406,7 @@ public class BuatKuisFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 t.getMessage();
                 progressUtils.hide();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
@@ -427,7 +427,7 @@ public class BuatKuisFragment extends Fragment {
                 }
             }
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if(position == 0){
@@ -543,7 +543,7 @@ public class BuatKuisFragment extends Fragment {
         call = services.simpanKuis(prefManager.getSpToken(), "dashboard", "simpanKuis", prefManager.getSpEmail(), params);
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -590,7 +590,7 @@ public class BuatKuisFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 progressUtils.hide();
                 t.printStackTrace();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();

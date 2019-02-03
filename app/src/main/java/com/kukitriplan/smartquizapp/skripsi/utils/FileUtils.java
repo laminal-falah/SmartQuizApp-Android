@@ -156,7 +156,7 @@ public final class FileUtils {
                 Bitmap bmp = BitmapFactory.decodeStream(is);
                 return writeToTempImageAndGetPathUri(context, bmp).toString();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();;
+                e.printStackTrace();
             } finally {
                 try {
                     is.close();

@@ -42,7 +42,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBarFeedback" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarFeedback"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btnFeedback"

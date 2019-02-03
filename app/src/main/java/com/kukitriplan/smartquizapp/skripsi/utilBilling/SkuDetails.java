@@ -15,6 +15,8 @@
 
 package com.kukitriplan.smartquizapp.skripsi.utilBilling;
 
+import android.support.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,6 +59,7 @@ public class SkuDetails {
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
 
+    @NonNull
     @Override
     public String toString() {
         return "SkuDetails:" + mJson;

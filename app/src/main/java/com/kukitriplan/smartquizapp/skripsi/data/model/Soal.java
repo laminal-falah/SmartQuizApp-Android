@@ -1,5 +1,7 @@
 package com.kukitriplan.smartquizapp.skripsi.data.model;
 
+import android.support.annotation.NonNull;
+
 public class Soal {
     private String nomorSoal;
     private String idKuis;
@@ -114,6 +116,7 @@ public class Soal {
         this.pembahasan = pembahasan;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Soal{" +

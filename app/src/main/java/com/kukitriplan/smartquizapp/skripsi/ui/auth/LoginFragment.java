@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;

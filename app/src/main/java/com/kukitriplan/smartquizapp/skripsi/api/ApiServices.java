@@ -3,7 +3,6 @@ package com.kukitriplan.smartquizapp.skripsi.api;
 import com.kukitriplan.smartquizapp.skripsi.data.response.AuthResponse;
 import com.kukitriplan.smartquizapp.skripsi.data.response.DashboardResponse;
 import com.kukitriplan.smartquizapp.skripsi.data.response.HomeResponse;
-import com.kukitriplan.smartquizapp.skripsi.data.response.NotificationResponse;
 
 import java.util.Map;
 

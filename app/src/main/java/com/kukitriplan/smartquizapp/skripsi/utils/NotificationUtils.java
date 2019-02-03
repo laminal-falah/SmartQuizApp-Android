@@ -13,26 +13,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
-import android.util.Log;
 
 import com.kukitriplan.smartquizapp.R;
-import com.kukitriplan.smartquizapp.skripsi.data.db.NotificationsHelper;
-import com.kukitriplan.smartquizapp.skripsi.data.model.Notifications;
-import com.kukitriplan.smartquizapp.skripsi.data.shared.SharedLoginManager;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class NotificationUtils {
 

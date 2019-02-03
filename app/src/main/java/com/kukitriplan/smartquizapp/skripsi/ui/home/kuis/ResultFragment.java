@@ -97,7 +97,7 @@ public class ResultFragment extends Fragment {
                 call = services.beriBintang(prefManager.getSpToken(), "home", "beriBintang", prefManager.getSpEmail(), getArguments().getString("IDKUIS"), params);
                 call.enqueue(new Callback<HomeResponse>() {
                     @Override
-                    public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                    public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                         if (response.isSuccessful()) {
                             HomeResponse res = response.body();
                             HomeJson json = res.getHome();
@@ -113,7 +113,7 @@ public class ResultFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<HomeResponse> call, Throwable t) {
+                    public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

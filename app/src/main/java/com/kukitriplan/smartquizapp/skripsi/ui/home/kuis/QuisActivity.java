@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -101,7 +102,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
         call = services.tampilSoal(prefManager.getSpToken(), "home", "tampilSoal", prefManager.getSpEmail(), getIntent().getStringExtra("id"));
         call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 if (response.isSuccessful()) {
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
@@ -163,7 +164,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
             }
 
             @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -179,7 +180,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
         call = services.submitJawaban(prefManager.getSpToken(), "home", "submitJawaban", prefManager.getSpEmail(), params);
         call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 if (response.isSuccessful()) {
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
@@ -193,7 +194,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
             }
 
             @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -204,7 +205,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
         call = services.selesaiKuis(prefManager.getSpToken(), "home", "selesaiKuis", prefManager.getSpEmail(), prefManager.getSpIdkuis());
         call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 if (response.isSuccessful()) {
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
@@ -229,7 +230,7 @@ public class QuisActivity extends AppCompatActivity implements ResultFragment.On
             }
 
             @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

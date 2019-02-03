@@ -2,6 +2,7 @@ package com.kukitriplan.smartquizapp.skripsi.ui.dashboard;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -135,7 +136,7 @@ public class PasswordActivity extends AppCompatActivity {
         call = services.submitPassword(prefManager.getSpToken(), "home", "ubahPassword", prefManager.getSpEmail(), params);
         call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 if (response.isSuccessful()) {
                     HomeResponse res = response.body();
                     HomeJson json = res.getHome();
@@ -161,7 +162,7 @@ public class PasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

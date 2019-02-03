@@ -113,7 +113,7 @@ public class PenjualanFragment extends Fragment {
         call = services.getHistoryIkutKuis(prefManager.getSpToken(), "dashboard", "historyIkutKuis", prefManager.getSpEmail());
         call.enqueue(new Callback<DashboardResponse>() {
             @Override
-            public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
+            public void onResponse(@NonNull Call<DashboardResponse> call, @NonNull Response<DashboardResponse> response) {
                 if (response.isSuccessful()) {
                     DashboardResponse res = response.body();
                     DashboardJson json = res.getDashboard();
@@ -151,7 +151,7 @@ public class PenjualanFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DashboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<DashboardResponse> call, @NonNull Throwable t) {
                 progressUtils.hide();
                 tvError.setVisibility(View.VISIBLE);
                 tvError.setText(t.getMessage());
